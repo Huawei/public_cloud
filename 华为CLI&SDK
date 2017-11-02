@@ -1,0 +1,3185 @@
+
+CLI&SDK华为云验证
+
+
+
+ 
+目  录
+1 命令行	1
+1.1 CLI概述	1
+1.2 CLI使用样例	6
+1.2.1 使用Individual CLI创建云服务器概述	6
+1.2.2 使用Individual CLI创建云服务器示例	7
+1.2.3 使用Unified CLI创建云服务器概述	9
+1.2.4 使用Unified CLI创建云服务器示例	10
+1.2.5 使用Individual CLI删除云服务器	11
+1.2.6 使用Unified CLI删除云服务器	11
+2 SDK	12
+2.1 SDK简介	12
+2.2 JAVA	13
+2.2.1 OpenStack4j 简介	13
+2.2.2 入门	13
+2.2.3 IAM OpenStack4j示例	15
+2.2.4 IMS OpenStack4j示例	16
+2.2.5 VPC OpenStack4j示例	17
+2.2.6 ECS OpenStack4j示例	19
+2.2.7 EVS OpenStack4j示例	23
+2.2.8 AS OpenStack4j示例	25
+2.2.9 CES OpenStack4j示例	28
+2.2.10 DNS OpenStack4j示例	32
+2.2.11 ELB OpenStack4j示例	36
+2.2.12 VBS OpenStack4j示例	37
+2.2.13 SMN OpenStack4j示例	42
+2.2.14 AntiDDoS OpenStack4j示例	43
+2.2.15 DMS OpenStack4j示例	47
+2.3 Python	48
+2.3.1 Python OpenStack SDK简介	48
+2.3.2 入门	48
+2.3.3 IAM Python OpenStack SDK示例	50
+2.3.4 IMS Python OpenStack SDK示例	50
+2.3.5 VPC Python OpenStack SDK示例	52
+2.3.6 ECS Python OpenStack SDK示例	54
+2.3.7 EVS Python OpenStack SDK示例	57
+2.3.8 AS Python OpenStack SDK示例	58
+2.3.9 CES Python OpenStack SDK示例	60
+2.3.10 DNS Python OpenStack SDK示例	66
+2.3.11 ELB Python OpenStack SDK示例	68
+2.3.12 VBS Python OpenStack SDK示例	69
+2.3.13 SMN Python OpenStack SDK示例	74
+2.3.14 KMS Python OpenStack SDK示例	74
+2.3.15 AntiDDoS Python OpenStack SDK示例	75
+2.3.16 DMS Python OpenStack SDK示例	78
+3 常见问题	80
+3.1 如何在控制台上创建秘钥对?	80
+3.2 如何创建安全组?	80
+3.3 如何获取domain_name、project_name和project_id ?	81
+A API & SDK 对应关系	83
+A.1 JAVA	83
+A.1.1 IAM	83
+A.1.2 IMS	84
+A.1.3 VPC	84
+A.1.4 ECS	87
+A.1.5 EVS	90
+A.1.6 AS	91
+A.1.7 CES	93
+A.1.8 DNS	94
+A.1.9 ELB	95
+A.1.10 VBS	97
+A.1.11 SMN	98
+A.1.12 AntiDDoS	100
+A.1.13 DMS	101
+A.2 Python	102
+A.2.1 IAM	102
+A.2.2 IMS	102
+A.2.3 VPC	103
+A.2.4 ECS	106
+A.2.5 EVS	109
+A.2.6 AS	110
+A.2.7 CES	112
+A.2.8 DNS	112
+A.2.9 ELB	113
+A.2.10 VBS	115
+A.2.11 SMN	116
+A.2.12 KMS	118
+A.2.13 AntiDDoS	119
+A.2.14 DMS	120
+B OpenStack 客户端命令行	121
+C 修订记录	122
+ 
+1 命令行
+1.1  CLI概述
+1.2  CLI使用样例
+1.1 CLI概述
+命令行接口采用OpenStackClient工具。该工具可以提供统一命令行客户端，通过执行命令即可访问项目API以获取所有云服务，操作非常简单。
+命令行客户端概述
+OpenStackClient项目设有统一命令行客户端，通过执行命令即可访问项目API，操作非常简单。并且，大多数OpenStack项目会为每一项服务设置一个命令行客户端。例如，Compute服务提供的是Nova命令行客户端。具体信息请参见详情。
+安装
+工具安装说明
+OpenStackClient可以通过运行python-openstackclient插件安装使用。因此，在使用该工具之前，需要确保python-openstackclient正常。
+只要保证Python运行正常，该工具可以在所有操作系统上运行。但是由于各种操作系统之间存在差异，所以操作方法不尽相同。推荐使用Ubuntu14.04操作系统。以下操作都以Ubuntu14.04为例。
+1.	更新系统
+执行如下命令：
+apt-get update
+apt-get upgrade
+2.	安装Python
+根据OS类型安装 Python和pip。支持Python 2.7.12和Python 3.4以上版本。
+Ubuntu 14.04一般包含 Python 2.7.12。若尚未安装Python，请按照下面步骤安装。
+执行以下命令安装python：
+sudo apt-get install python
+执行以下命令安装pip：
+sudo apt-get install python-pip
+执行以下命令安装dev：
+sudo apt-get install python-dev
+3.	安装 python-openstackclient
+默认支持以下版本：
+−	python-openstackclient: 3.2.1
+−	python-novaclient: 6.0.0
+−	python-glanceclient: 2.5.0
+−	python-keystoneclient: 3.5.1
+−	python-neutronclient: 6.0.0
+−	python-cinderclient: 1.9.0
+−	python-heatclient: 1.5.1
+−	python-designateclient: 2.3.0
+−	openstacksdk: 0.9.5
+−	pbr: 2.0.0
+−	requests: 2.12.0
+通过执行以下命令，使用pip安装python-openstackclient：
+pip install python-openstackclient==3.2.1
+安装完成之后，请在命令行中输入如下命令，验证python-openstackclient能否正常运行。
+openstack -h
+查看是否显示帮助信息。如有帮助信息，表示安装成功。
+其他部件安装方法相同。请使用相同的命令，按顺序进行安装。
+ 
+在安装python-openstackclient 3.2.1时，pbr和requests会自动升级到比较高的版本，导致openstack部分命令不可用。如果遇到此问题，请重新按指定版本安装pbr和requests，命令为pip install pbr==2.0.0和pip install requests==2.12.0。
+4.	配置OpenStack Client
+必须使用root用户安装客户端，但是可以以普通用户身份进行配置。
+
+ 
+只能通过安全网络（例如，通过VPN或租户弹性云服务器）调用API。如果网络不安全，则可能会受到攻击。
+a.	在OpenStack客户端安装路径下，创建一个环境变量文件，例如novarc。
+b.	使用文本编辑器创建环境变量文件，然后输入用户名、密码、区域、IAM IP地址和端口。
+示例如下：
+export OS_USERNAME="brhwtest01"  
+export OS_USER_DOMAIN_NAME=brhwtest01  
+#export OS_DOMAIN_NAME="${NAME##* }"  
+export OS_PASSWORD=TestApi#$  
+# Only change these for a different region  
+export OS_TENANT_NAME=aaa  
+export OS_PROJECT_NAME=aaa  
+export OS_AUTH_URL=https://iam.bbb.example.com:443/v3  
+export OS_INTERFACE=public 
+# No changes needed beyond this point  
+export NOVA_ENDPOINT_TYPE=publicURL  
+export OS_ENDPOINT_TYPE=publicURL  
+export CINDER_ENDPOINT_TYPE=publicURL  
+export OS_VOLUME_API_VERSION=2  
+export OS_IDENTITY_API_VERSION=3  
+export OS_IMAGE_API_VERSION=2
+需要配置的环境变量包括用户名、密码、IAM URL和端口号。环境变量见表 1-1。
+环境变量
+参数	说明
+OS_USERNAME	指调用命令所用的用户名。
+指登录管理控制台所用的用户名。
+OS_USER_DOMAIN_NAME	指当前用户的租户名。
+指登录控制台所用的企业账号。
+OS_DOMAIN_NAME	指当前租户的名称。
+OS_PASSWORD	指调用命令所用的密码。
+指登录控制台所用的密码。
+OS_TENANT_NAME	指调用命令所用的租户名。
+指我的凭证页项目列表中的项目名称。
+OS_PROJECT_NAME	指调用命令所用的项目名称。
+指我的凭证页面项目列表内的项目名称。
+OS_AUTH_URL	参数值的格式为https://IAM URL:port number/API version。例如
+https://iam.bbb.example.com:443/v3。
+	IAM URL：“终端节点”描述，请参见《统一身份认证服务API参考》“地区和终端节点”章节。
+	端口号：443
+	API版本：v3（当前）
+NOVA_ENDPOINT_TYPE	指Nova的终端节点类型。当使用OpenStack命令时，需要配置该参数。参数值为publicURL。
+OS_ENDPOINT_TYPE	指OS的终端节点类型。当使用OpenStack命令时，需要配置该参数。将参数值设置为publicURL。
+CINDER_ENDPOINT_TYPE	指Cinder的终端节点类型。当使用OpenStack命令时，需要配置该参数。将参数值设置为publicURL。
+OS_VOLUME_API_VERSION	指Cinder API的版本。参数值为2。
+OS_IDENTITY_API_VERSION	指鉴权API版本。参数值为3。
+OS_IMAGE_API_VERISON	指Glance API版本。参数值为2。
+
+5.	执行以下命令设置环境变量：
+source novarc
+6.	注意：当调用Keystone命令行时，需要导入环境变量OS_DOMAIN_NAME，并且将环境变量OS_TENANT_NAME和OS_PROJECT_NAME设置为空。命令如下：
+export OS_DOMAIN_NAME=domain_name
+unset OS_TENANT_NAME
+unset OS_PROJECT_NAME
+在调用其他服务的命令行时，需要把环境变量OS_DOMAIN_NAME设置为空，重新配置环境变量OS_TENANT_NAME和OS_PROJECT_NAME。命令如下：
+unset OS_DOMAIN_NAME
+export OS_TENANT_NAME=tenant_name
+export OS_PROJECT_NAME=project_name
+（可选）安装扩展客户端
+扩展客户端可以通过运行python-openstackclient插件使用。因此，在使用扩展客户端之前，需要保证 python-openstackclient处于正常状态。
+当前共提供六个服务的插件。详情请参见插件清单。请根据实际需要选择安装所需的服务插件。
+由于插件未被提交至pip库，因此插件不能使用pip安装。请从GitHub 下载插件源代码（请单击这里下载插件），使用python setup.py install来安装插件。关于如何安装，请参见各插件随附的Readme 文档。
+（可选）配置扩展客户端
+在使用扩展客户端时，需要配置认证信息，认证成功后，扩展客户端才访问服务。您可以通过导入环境变量或在命令行工具（CLT）中输入参数两种方式来配置用户名和密码进行认证。
+	导入环境变量
+环境变量如下：
+export OS_AUTH_URL=<url-to-openstack-identity>  
+export OS_PROJECT_NAME=<project-name>  
+export OS_USERNAME=<username>  
+export OS_PASSWORD=<password>  
+export OS_REGION_NAME=<region>  
+# IP address of each service 
+export OS_ANTIDDOS_ENDPOINT_OVERRIDE=<url-to-endpoint-of-service>  
+export OS_AS_ENDPOINT_OVERRIDE=<url-to-endpoint-of-service>  
+export OS_CLOUDEYE_ENDPOINT_OVERRIDE=<url-to-endpoint-of-service> 
+export OS_VB_ENDPOINT_OVERRIDE=<url-to-endpoint-of-service> 
+export OS_WORKSPACE_ENDPOINT_OVERRIDE=<url-to-endpoint-of-service> 
+export OS_KM_ENDPOINT_OVERRIDE=<url-to-endpoint-of-service>
+您可以在/etc/profile.d目录下创建脚本文件，写入环境变量。在这种情况下，无需重复配置变量。
+	命令行工具（CLT）
+您可以使用CLT工具，在命令行中直接输入参数。
+如下：
+--os-auth-url <url>  
+--os-project-name <project-name> 
+--os-username <username> 
+[--os-password <password>]
+Token认证
+环境变量：
+export OS_TOKEN=<token> 
+export OS_URL=<url-to-openstack-service> 
+命令参数如下：
+--os-token <token> 
+--os-url <url-to-openstack-service> 
+当前支持
+当前支持OpenStack Individual CLI、OpenStack Unified CLI和Extended CLI。
+	OpenStack Unified CLI源代码：
+https://github.com/openstack/python-openstackclient/tree/master
+版本：3.2.1
+	Extended CLI 源代码：
+https://github.com/Huawei/OpenStackClient_AntiDDOS
+https://github.com/Huawei/OpenStackClient_CES
+https://github.com/Huawei/OpenStackClient_KMS
+https://github.com/Huawei/OpenStackClient_Auto-Scaling
+https://github.com/Huawei/OpenStackClient_VBS
+https://github.com/Huawei/OpenStackClient_Workspace
+	OpenStack Individual CLI源代码：
+版本：6.0.0
+https://github.com/openstack/python-novaclient
+版本：2.5.0
+https://github.com/openstack/python-glanceclient
+版本：3.5.1
+https://github.com/openstack/python-keystoneclient
+版本：6.0.0
+https://github.com/openstack/python-neutronclient
+版本：1.9.0
+https://github.com/openstack/python-cinderclient
+版本：1.5.1
+https://github.com/openstack/python-heatclient
+版本：2.3.0
+https://github.com/openstack/python-designateclient
+1.2 CLI使用样例
+1.2.1 使用Individual CLI创建云服务器概述
+创建流程
+1.	使用Neutron命令创建Port。
+2.	使用Cinder命令，创建系统盘和数据盘。
+3.	使用Nova命令，创建弹性云服务器。
+4.	更新Port的extra_dhcp_opts属性，用于设置弹性云服务的默认路由。
+约束和限制
+1.	在创建云服务器之前，需要先申请port，并且需要创建一个主网卡资源（并且只能有一个），以便进行云服务器发放。
+2.	创建云服务器时，请不要删除对应的镜像（Image）、网络（Network）、子网（subnet）、安全组（security_group）等信息。
+3.	暂不支持批量创建云服务器。
+4.	当云服务器创建失败或云服务器不可用时，请删除云服务器后重新参考上述流程创建。
+5.	一个弹性云服务器只能有一个Port设置extra_dhcp_opts属性。
+1.2.2 使用Individual CLI创建云服务器示例
+创建Port
+执行以下命令，创建Port。
+neutron port-create d5d7e451-cc4a-4c26-a4cf-6e94d56cbabd --name port_test
+回显如下所示。
+ 
+创建镜像磁盘
+执行以下命令，创建镜像磁盘。
+cinder create --image-id f6784132-2951-4d1c-82b1-68c540f9fdd6 --volume-type SATA --availability-zone aaa --name volume_test 10
+ 
+命令中的“aaa”表示可用分区名称。
+回显如下所示。
+ 
+创建云服务器
+执行以下命令，创建云服务器。
+nova boot --boot-volume 09a0281f-9cc1-4735-8d61-bdba6abe82a7 --availability-zone aaa --flavor normal1 --nic port-id=c2f6726d-99aa-4719-a63d-6dd72a627134 server_test
+ 
+命令中的“aaa”表示可用分区名称。
+回显如下所示。
+ 
+更新Port
+执行以下命令，更新Port。
+neutron port-update c2f6726d-99aa-4719-a63d-6dd72a627134 --extra-dhcp-opt opt_name=3,opt_value=192.168.xxx.xxx
+回显如下所示。
+ 
+1.2.3 使用Unified CLI创建云服务器概述
+Unified CLI不支持通过磁盘创建云服务器，要采用通过镜像创建云服务器的方式。
+创建流程
+1.	使用openstack port create命令创建Port。
+2.	使用openstack server create命令创建云服务器。
+3.	使用openstack port set命令更新Port的属性，修改Port的IP地址。
+约束和限制
+1.	在创建云服务器之前，需要先申请port，并且需要创建一个主网卡资源（并且只能有一个），以便进行云服务器发放。
+2.	创建云服务器时，请不要删除对应的镜像（Image）、网络（Network）、子网（subnet）、安全组（security_group）等信息。
+3.	不支持批量创建云服务器。
+4.	如未按以上原则创建云服务器，造成云服务器创建失败以及云服务器不可用，需要删除云服务器后重新按照上述流程创建。
+1.2.4 使用Unified CLI创建云服务器示例
+创建Port
+执行以下命令，创建Port。
+openstack port create port_test --network d5d7e451-cc4a-4c26-a4cf-6e94d56cbabd
+ 
+创建云服务器
+执行以下命令，创建云服务器。
+openstack server create --image f6784132-2951-4d1c-82b1-68c540f9fdd6 --flavor normal1 --availability-zone aaa --nic port-id=06137bc8-bf2a-47cf-8f0a-86ff43581cbf myserver
+ 
+命令中的“aaa”表示可用分区名称。
+回显如下所示。
+ 
+更新Port
+执行以下命令，更新Port。
+openstack port set c2f6726d-99aa-4719-a63d-6dd72a627134 --fixed-ip subnet=14cae719-ab9c-401b-9097-4a6ff23c8407,ip-address=192.168.xxx.xxx
+回显如下所示。
+ 
+1.2.5 使用Individual CLI删除云服务器
+删除云服务器是一个单一的操作，执行以下命令，删除云服务器。
+nova delete 3cc81618-4ff4-4e6a-b4df-2a437cd97422
+1.2.6 使用Unified CLI删除云服务器
+删除云服务器是一个单一的操作，执行以下命令，删除云服务器。
+openstack server delete 428ac8a5-4fd2-4c22-a33b-f48b46231353
+ 
+2 SDK
+2.1  SDK简介
+2.2  JAVA
+2.3  Python
+2.1 SDK简介
+软件开发工具包（SDK）包括代码以及示例，用户可以自行选择语言创建OpenStack云应用。
+目前SDK的语言支持两种：JAVA和Python。如果以下SDK中有任意一种不支持您所选的语言或用例，您可以使用API或其他任意一种熟知的SDK。
+JAVA SDK (OpenStack 4J)
+2.2.2 入门
+学习示例
+A.1 JAVA
+Python SDK(Python SDK)
+2.3.2 入门
+2.3.3 IAM Python OpenStack SDK示例
+A.2 Python
+2.2 JAVA
+2.2.1 OpenStack4j 简介
+什么是 OpenStack4j?
+OpenStack4j 是一个开源的LIB库，可以帮助您管理OpenStack部署。其提供的Fluent API有助于用户完全控制各种OpenStack服务。
+API和OpenStack4j之间的兼容性
+OpenStack4j 3.0.4与原生OpenStack API之间的兼容性见下表。详情请参见“A.1 JAVA”。
+OpenStack4j组件	服务	版本
+Keystone	IAM	V3
+Nova	ECS	V2
+Neutron	VPC	V2.0
+Cinder	EVS	V2
+Glance	IMS	V2
+
+2.2.2 入门
+前提条件
+1.	已获取API相关文档。
+登录以下网站获取 API相关文档。
+http://developer.hwclouds.com/index.html
+通过这些文档，可以获取云平台支持的OpenStack API参数。
+2.	已获取OpenStack4j的官方文档。
+登录以下网站获取OpenStack4j的官方文档。
+http://www.openstack4j.com/learn
+了解如何使用OpenStack4j对用户而言非常重要。
+3.	已经申请到云平台账号，并开通所需的服务。
+4.	OpenStack4j 适用于 JDK1.7+ ，我们建议您使用 JDK1.8。
+5.	欲了解Java SDK项目的源代码，请访问如下地址：
+https://github.com/huawei/openstack4j
+SDK获取和安装
+请从GitHub 上下载JAR包，并在集成开发环境（IDE）中导入。
+https://github.com/Huawei/public_cloud/blob/master/OpenStack4j/huawei-openstack4j-1.0.1.jar
+开始使用
+在开始调用SDK访问服务API前，您需要配置访问服务的Endpoint和初始化SDK客户端，代码结构如下：
+// 添加各个服务的endpoint绑定 
+OverridableEndpointURLResolver endpointResolver = new OverridableEndpointURLResolver(); 
+ 
+endpointResolver.addOverrideEndpoint(ServiceType.VOLUME_BACKUP, 
+"https://vbs.example.com/v2/%(project_id)s"); 
+ 
+endpointResolver.addOverrideEndpoint(ServiceType.AUTO_SCALING, 
+"https://as.example.com/autoscaling-api/v1/%(project_id)s"); 
+ 
+endpointResolver.addOverrideEndpoint(ServiceType.CLOUD_EYE, 
+"https://ces.example.com/V1.0/%(project_id)s"); 
+ 
+endpointResolver.addOverrideEndpoint(ServiceType.LOAD_BALANCER, 
+"https://elb.example.com/v1.0/%(project_id)s"); 
+ 
+endpointResolver.addOverrideEndpoint(ServiceType.DNS,  
+"https://dns.example.com"); 
+ 
+ 
+// 使用credentials 进行认证 
+String authUrl = "https://iam.example.com/v3"; 
+String user = "replace-with-your-username"; 
+String password = "replace-with-your-password"; 
+String projectId = "replace-with-your-projectid"; 
+String userDomainId = "replace-with-your-domainid"; 
+ 
+osclient = OSFactory.builderV3() 
+.withConfig(Config.newConfig().withEndpointURLResolver(endpointResolver)) 
+.endpoint(authUrl) 
+.credentials(user, password, Identifier.byId(userDomainId)) 
+.scopeToProject(Identifier.byId(projectId)).authenticate();
+	上述代码中example的格式为：“区域.云平台域名”，参数详情可以访问这里了解。
+	单击此处获取使用Java SDK的完整代码示例，该文件同时提供了服务的endpoint设置格式，请参考。
+弹性云服务器的典型创建过程
+按照以下步骤创建弹性云服务器，并向弹性云服务器挂载EIP和磁盘。
+步骤	说明
+1	连接IAM（Keystone）与AUTH。
+2	获取镜像ID。
+	选择1：使用公共镜像（推荐）。
+	选择2：使用OpenStack Glance镜像V2功能，下载所需镜像。云平台支持vhd、zvhd、qcow2和vmdk镜像。
+3	使用VPC API获取网络ID。详情请参见创建VPC和子网章节。
+
+4	创建ECS。详情请参见创建ECS章节。
+
+5	（可选）将EIP绑定至ECS上。详情请参见将EIP绑定至ECS上章节。
+
+6	（可选）向ECS挂载卷。详情请参见向ECS挂载卷章节。
+
+
+2.2.3 IAM OpenStack4j示例
+服务认证
+IAM服务提供API客户端认证。经IAM授权后，您可以调用其他服务API，例如用于创建ECS所用的API。
+认证代码示例如下：
+OSClientV3 os = OSFactory.builderV3()  
+.endpoint(("https://iam.example.com/v3")  
+.credentials("username", "password", Identifier.byName("domain_name"))  
+.scopeToProject(Identifier.byId("project_id")  
+.authenticate();
+表2-1 参数说明
+参数	说明
+username	用户名。
+password	密码。
+domain_name	详情请参见3.3 如何获取domain_name、project_name和project_id ?
+
+project_id	详情请参见3.3 如何获取domain_name、project_name和project_id ?
+
+
+用户管理
+域级认证可用于用户管理操作。
+OSClientV3 os = OSFactory.builderV3()  
+.endpoint("https://iam.example.com/v3")  
+.credentials("username", "password", Identifier.byName("domain_name"))  
+.scopeToDomain(Identifier.byName("domain_name"))  
+.authenticate();
+表2-2 参数说明
+参数	说明
+username	指用户名。
+password	指密码。
+domain_name	指用户的域名。
+详情请参见3.3 如何获取domain_name、project_name和project_id ?
+
+
+2.2.4 IMS OpenStack4j示例
+公共镜像
+公共镜像是一种被广泛使用的标准镜像。每个公共镜像都包含一个OS和多个预安装公共应用，并且可对所有用户可见。您可以根据需要在公共镜像中配置OS和软件。
+按照下图所示，从控制台获取镜像ID：
+ 
+您还可以使用以下代码列出所有镜像：
+os.imagesV2().list()
+使用OpenStack4j 创建私有镜像
+IMS支持原生OpenStack Glance v2镜像API。通过该API，可以使用镜像文件创建私有镜像。所支持镜像类型包括vhd、zvhd、qcow2和vmdk。
+下文以QCOW2格式的镜像为例。镜像上传需要很长一段时间，这取决于镜像大小和网络质量。
+//Create an Image.  
+Image createdImage = os.imagesV2().create(Builders.imageV2()  
+.osDistro("ubuntu")  
+.name("image-name")  
+.containerFormat(ContainerFormat.BARE)  
+.visibility(ImageVisibility.PRIVATE)  
+.diskFormat(DiskFormat.QCOW2)  
+.architecture("x86_64")  
+.build());  
+//Upload the image's image file.  
+Payload<File> payload = Payloads.create(new File("root.img"));  
+ActionResponse uploadResult = os.imagesV2().upload(createdImage.getId(), payload, os.imagesV2().get(createdImage.getId()));  
+System.out.println("Uploaded done");
+表2-3 参数说明
+参数	说明	示例
+diskFormt	指磁盘的格式。	参数值为DiskFormat.QCOW2。
+IMS支持vhd、zvhd、qcow2和vmdk 格式镜像。
+
+2.2.5 VPC OpenStack4j示例
+VPC服务OpenStack4j示例
+使用虚拟私有云（VPC）服务，可以为弹性云服务器（ECS）提供本地隔离、可配置和可管理的虚拟网络，提高云资源的安全性，简化网络部署。
+一个典型的VPC由路由器、网络和子网组成，如下图所示：
+ 
+可以在控制台创建VPC，然后获取UUID：
+ 
+	路由器：路由器是一个逻辑实体，可以跨越内部子网转发报文，然后，通过合适的外部网关，在外部网络上对报文进行网络地址转换。
+	网络：网络是一个隔离的2层网段，与物理组网的VLAN类似。
+	子网：子网是由IPv4地址或IPv6地址和相关配置状态组成的IP地址段。
+创建VPC和子网
+可以使用OpenStack4j创建子网。详细操作如下：
+1.	创建路由器。
+2.	创建网络。
+3.	创建子网。
+4.	连接子网与路由器。
+以下代码所示为网络创建过程，您可以根据需要修改这些配置。创建路由器、网络和子网并将子网与路由器连接之后，您可以在控制台看到所创建的新VPC。
+public Network createNetwork() {  
+              //Create a router  
+              Router router =  os.networking().router().create(Builders.router()  
+                            .name("routerName")  
+                            .build());  
+              //Create a network  
+              Network network = os.networking().network().create(Builders  
+                            .network()  
+                            .name("networkName")  
+                            .adminStateUp(true)  
+                            .build());  
+              //Create a subnet  
+              Subnet subnet = os.networking().subnet().create(Builders.subnet()  
+                            .networkId(network.getId())  
+                            .name("subnetName")  
+                            .enableDHCP(true)  
+                            .cidr("192.168.0.0/24")  
+                            .addDNSNameServer("8.8.8.8")  
+                            .gateway("192.168.0.1")  
+                            .build());  
+              //Connect the subnet to the router, make the router connect to the internet.  
+              RouterInterface interface = os.networking().router().attachInterface(router.getId(), AttachInterfaceType.SUBNET, subnet.getId());  
+              return network;  
+       }
+删除VPC
+删除VPC之前，需要删除VPC 子网中所创建的ECS，然后取消路由器和子网之间的关联，删除子网和网络。
+执行ECS删除命令并确保根据ECS删除状态删除ECS之后，您可以删除网络。关于如何删除网络，请参见以下代码。
+private void clearNet() {  
+os.networking().router().detachInterface(routerID, subnetID, interface.getPortId());  
+os.networking().subnet().delete(subnetID);  
+os.networking().network().delete(networkID);  
+os.networking().router().delete(routerID);  
+}
+外部网络
+外部网络是属性router:external被设定为true的网络。该网络可用于分配EIP。在将EIP添加到ECS上之后，即可通过互联网访问ECS。
+无需创建外部网络，因为外部网络已经存在。
+通过执行API: GET /v2.0/networks?router:external=True命令，查询创建EIP所用网络的ID。
+2.2.6 ECS OpenStack4j示例
+创建ECS
+1.	获取Flavor ID。
+通过执行os.compute().flavors().list() 命令，查询所有flavors，并使用符合要求的Flavor ID 创建ECS。
+2.	创建安全组
+关于如何创建安全组，请参见3.2 如何创建安全组?
+或者，您可以根据以下代码，使用OpenStack4j创建安全组。
+org.openstack4j.model.network.SecurityGroup sg = os.networking().securitygroup().create(Builders.securityGroup()  
+.name("openstack4j-test-sg")  
+.build());  
+SecurityGroupRule rule = Builders.securityGroupRule()  
+.securityGroupId(sg.getId())  
+.protocol("tcp")  
+.direction("ingress")  
+.portRangeMin(1024)  
+.portRangeMax(5000)  
+.build();  
+SecurityGroupRule sgrule = os.networking().securityrule().create(rule);
+安全组的规则有多种，但是都需要满足网络通信要求。
+3.	创建秘钥对
+如何创建秘钥对，详情请参见3.1 如何在控制台上创建秘钥对?
+或者，您可以根据以下代码，使用OpenStack4j创建秘钥对。
+String testPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDdNdUHJHvVaz7ObMKKm4EfqtN8COmcbT7GrCsfrlxz95nUc8GlAK51VaQjqGU5RwIKPcOfrkJTcXst//pgx7PyzrWrmFlOIjaY8e9HxLQcz2IzrbrbM8TJhB+I3cApdpwsTqGwjW1xzcMgSrqB0BT7gU4mau0I7Z50RszAhYUVpwGk5OpZGxcXSBQSdSr/KKI6BuMNJYtugGn5dmr9Ddf99TLbIleLYjmqB0rMjNKHPUxEYMLtixKvXp0qNFfShu7bDp7e2TjhGY8wpda0kC2dDGQJKE187N+A3hp2XBZ2UjTcjAVa3C+dwHzHCZd6/yAfJoENe2fDRVnb8cMgm/UX Generated-by-Nova";  
+Keypair keypair = os.compute().keypairs().create("keyPairName", testPublicKey);
+4.	创建ECS。
+您可以使用以下代码创建ECS。通过使用WaitForServerStatus，您可以持续查询ECS的状态，直至ECS达到规定的状态或者查询超时为止。可以根据实际要求修改参数。在以下例子中，超时间隔默认为10分钟。
+private void createTestServer() throws IOException {  
+ArrayList networkList = new ArrayList();  
+networkList.add(net.getId());  
+  
+ServerCreate serverCreate = Builders.server().name("vm-name")  
+.flavor("flavorId")  
+.image("imageId")  
+.networks(networkList)  
+.build();  
+server = os.compute().servers().boot(serverCreate);  
+os.compute().servers().waitForServerStatus(server.getId(), Server.Status.ACTIVE, 10, TimeUnit.MINUTES);  
+}
+表2-4 参数说明
+参数	说明	示例
+flavorId	指Flavor ID。	normal2
+imageId	指镜像的ID。	51b2c37f-f5bd-40e0-8aa2-1899a6bbca30
+
+将EIP绑定至ECS
+1.	查询ECS的端口ID。
+您可以根据以下代码，查询创建EIP所用的ECS端口ID。
+List<? extends InterfaceAttachment> nicID = os.compute().servers().interfaces().list(server.getId());  
+String port_id = nicID.get(0).getPortId();
+2.	创建EIP。
+根据以下代码创建EIP。
+由于ECS创建需要花费一定的时间，所以您需要检查ECS状态。
+NetFloatingIP fip = os.networking().floatingip()         .create(Builders.netFloatingIP().floatingNetworkId("external_network_id").portId(port_id).build());  
+ 
+if (os.networking().floatingip().get(fip.getId()).getStatus().equals("ACTIVE")) {  
+System.out.println("EIP API responsed Success");  
+}  
+ 
+// judge fip is created succeffuly  
+int count = 1;  
+boolean createFlat = false;  
+while (count < 10) {  
+if (os.networking().floatingip().get(fip.getId()).getStatus().toString().equals("ACTIVE")) {  
+System.out.println("Confirmed EIP Create Success");  
+createFlat = true;  
+break;  
+}  
+count++;  
+Thread.sleep(1000);  
+System.out.println(os.networking().floatingip().get(fip.getId()).getStatus());  
+}  
+if (!createFlat) {  
+System.out.println("EIP is not successfully created");  
+}
+external_network_id 是指外部网络ID。详情请参见外部网络。
+EIP创建成功后，其可以自动绑定至ECS上，因为您在创建EIP时已经指定了ECS端口ID。
+EIP解绑
+您可以根据以下代码，从ECS解绑EIP。
+解绑操作需要花费一定的时间，并且只有在被解绑后，EIP才可以删除。如果在解绑过程中您删除了EIP，则可能会上报错误消息。
+// after the fip is ACTIVE,Do the remove action  
+ActionResponse removeAction = os.compute().floatingIps().removeFloatingIP(server, fip.getFloatingIpAddress());  
+if (removeAction.isSuccess()) {  
+System.out.println("Remove Response Action Success");  
+}  
+ 
+// judge the EIP disassociate successfully  
+int j = 1;  
+boolean removeFlag = false;  
+while (j < 10) {  
+if (os.networking().floatingip().get(fip.getId()).getPortId() == null  
+&& os.networking().floatingip().get(fip.getId()).getStatus().toString().equals("DOWN")) {  
+removeFlag = true;  
+System.out.println("Confirmed disassociate successfuly");  
+break;  
+}  
+Thread.sleep(1000);  
+j++;  
+}  
+if (!removeFlag) {  
+System.out.println("Disassociate failure");  
+}
+删除ECS
+ECS删除操作需要花费一定的时间，在ECS删除过程中，不能立即删除端口。
+需要根据ECS ID查询ECS的状态。如果返回讯息为“null”，则表示ECS已被删除，您可以删除网络。
+ActionResponse deleteRespone = serverService.delete(server.getId());  
+System.out.println(os.compute().servers().get(server.getId()));  
+if (deleteRespone.isSuccess()) {  
+System.out.println("Delete Server action response :" + deleteRespone);  
+}  
+ 
+int i = 1;  
+boolean deleteServerStatus = false;  
+while (i < 10) {  
+if (os.compute().servers().get(server.getId()) == null) {  
+deleteServerStatus = true;  
+System.out.println("Confirmed delete server");  
+break;  
+}  
+Thread.sleep(1000);  
+i++;  
+}  
+ 
+if (!deleteServerStatus) {  
+System.out.println("Delete Server failed");  
+}
+查询ECS状态
+您可以根据以下代码查询ECS的状态。
+os.compute().servers().get(server_id).getStatus()
+（可选）修改ECS Flavor
+修改Flavor之后，您可以回溯修改过程或使修改生效。
+1.	修改Flavor。
+os.compute().servers().resize(serverId, flavorId)
+2.	确认修改。
+os.compute().servers().confirmResize(serverId)
+3.	回溯修改。如果您已经使修改生效，则不可以实施回溯。
+os.compute().servers().revertResize(serverId)
+重启ECS
+执行os.compute().servers().reboot(serverID, RebootType.SOFT) 命令，重启ECS。
+停止ECS
+执行os.compute().servers().action(serverID, Action.STOP) 命令，停止ECS。
+2.2.7 EVS OpenStack4j示例
+云硬盘（EVS）是基于分布式架构而设计的可扩展虚拟块存储设备。可以在线创建云硬盘并将其挂载到ECS上。云硬盘的使用方式与物理服务器上硬盘的使用方式一样。与传统硬盘相比，云硬盘具有更高的数据可靠性和I/O吞吐能力，并且使用起来更加方便。云硬盘适用于文件系统、数据库以及需要块存储设备的系统软件和应用。
+创建卷
+您可以根据以下代码，使用OpenStack4j创建一个卷。只有在该卷处于available状态时，才可以将其挂载到ECS上。
+Volume volume = os.blockStorage().volumes()  
+.create(Builders.volume().size(120).name("openstack4j-volume").build());  
+// wait until volume status available  
+int createVolumeCount = 1;  
+boolean createVolumeFlag = false;  
+while (createVolumeCount < 120) {  
+if (os.blockStorage().volumes().get(volume.getId()).getStatus().toString().equals("available")) {  
+System.out.println("volume Created successfully");  
+createVolumeFlag = true;  
+break;  
+}  
+Thread.sleep(1000);  
+createVolumeCount++;  
+}  
+if (!createVolumeFlag) {  
+System.out.println("Volume created failure");  
+}
+向ECS挂载卷
+您可以根据以下代码，使用OpenStack4j向ECS挂载卷。当卷处于in-use状态时，说明挂载成功。
+//after volume is available, attach to server  
+VolumeAttachment attachResult = os.compute().servers().attachVolume(server.getId(), volume.getId(),  
+"/dev/xvdb");  
+//adjust if attached successfully  
+int i = 1;  
+boolean attachStatus = false;  
+while (i < 10) {  
+if (os.blockStorage().volumes().get(volume.getId()).getStatus().toString().equals("in-use")) {  
+attachStatus = true;  
+System.out.println("volume attached successfully to " + os.compute().servers().get(server.getId()).getName());  
+break;  
+}  
+Thread.sleep(1000);  
+i++;  
+}  
+if (!attachStatus) {  
+System.out.println("attach failed");  
+}
+从ECS卸载卷
+您可以根据以下代码，将卷从ECS上卸载。卸载操作需要一定的时间，并且只有当卷被卸载后，才可以将其删除。
+ActionResponse detachResult = os.compute().servers().detachVolume(server.getId(), attachResult.getId());  
+System.out.println(detachResult);  
+assertTrue(detachResult.isSuccess());  
+int detachCount = 1;  
+boolean detachStatus = false;  
+while (detachCount < 60) {  
+if (os.blockStorage().volumes().get(volume.getId()).getStatus().toString().equals("available")) {  
+detachStatus = true;  
+System.out.println("volume detached successfully to " );  
+break;  
+}  
+Thread.sleep(1000);  
+detachCount++;  
+}  
+if (!detachStatus) {  
+System.out.println("detach failed");  
+}
+删除卷
+您可以根据以下代码，使用OpenStack4j删除卷。
+//after detached. delete the volume  
+ActionResponse deletVolumeResult = os.blockStorage().volumes().delete(volume.getId());  
+System.out.println("Delete volume result" + deletVolumeResult);
+2.2.8 AS OpenStack4j示例
+创建伸缩组
+伸缩组是具有相同应用场景配置的实例集合。伸缩组内定义了实例最大数量和最小数量等信息。
+可以参考以下代码创建弹性伸缩组，其中子网(Network)、安全组(Security Group)、VPC为必选参数，在创建伸缩组之前必须先创建VPC，以及同一个VPC下的子网(Network)、安全组(Security Group)。
+private String createScalingGroup() {   
+//network 
+     IdResourceEntity network = new IdResourceEntity(); 
+     network.setId("fd329aab-d33a-436c-abcf-9ccd4082b2e3");   
+//securityGroup 
+     IdResourceEntity securityGroup = new IdResourceEntity(); 
+     securityGroup.setId("57f0a6cd-c427-4e40-a9a2-301ca90893fd");   
+//az 
+     String availabilityZone = "eu-de-01";   
+//group 
+     ASAutoScalingGroupCreate group = ASAutoScalingGroupCreate.builder().groupName("test-4-bill") 
+           .vpcId("0bbc9614-1209-438f-83bb-572b3ad475ea").networks(Lists.newArrayList(network)) 
+           .configId("834b1d4a-36a7-4713-8ec3-41da28f12957").securityGroups(Lists.newArrayList(securityGroup)) 
+           .maxInstanceNumber(2).minInstanceNumber(1).desireInstanceNumber(1).coolDownTime(800) 
+           .lbListenerId("4e4f42f1ff004cbdac61f034c9cdfde8")           .lbListenerId("9ece3b458dd14ce6a15b09073855402e") 
+           .availabilityZones(Lists.newArrayList(availabilityZone)) 
+           .healthPeriodicAuditMethod(HealthPeriodicAuditMethod.NOVA_AUDIT) 
+           .healthPeriodicAuditTime(15) 
+           .instanceTerminatePolicy(InstanceTerminatePolicy.OLD_INSTANCE) 
+           .deletePublicip(true) 
+           .build();   
+//creat group 
+     ScalingGroupCreate result = osclient.autoScaling().groups().create(group); 
+     Assert.assertNotNull(result.getGroupId()); 
+     return result.getGroupId();  }
+创建伸缩配置
+伸缩配置定义了用于创建弹性伸缩组中实例的配置。AutoScaling为某个伸缩组自动添加实例时，会根据配置创建实例。
+可以参考以下代码创建弹性伸缩组配置，当使用已存在的云服务器的规格为模板创建弹性伸缩配置时传入instance_id字段，此时flavorRef、imageRef、disk字段不生效。当不传入instance_id字段时flavorRef、imageRef、disk字段为必选。
+private String createScalingConfig () { 
+        String keyname = "KeyPair-0406-as"; 
+        Map<String, String> metaData = Maps.newHashMap(); 
+        metaData.put("key1", "val1"); 
+        metaData.put("key2", "val2"); 
+        Disk disk = Disk.builder().size(40).volumeType(VolumeType.SATA).diskType(DiskType.SYS).build(); 
+//eip 
+        Bandwidth build = Bandwidth.builder().chargingMode(Bandwidth.ChargingMode.TRAFFIC).shareType(Bandwidth.ShareType.PER).size("100").build(); 
+        Eip eip = Eip.builder().ipType(Eip.IpType.BGP5).bandwidth(build).build(); 
+        PublicIp publicIp = PublicIp.builder().eip(eip).build(); 
+//instanceConfig 
+        InstanceConfig instanceConfig = InstanceConfig.builder().instanceId("e926dffb-6fc5-4f8e-b2ff-b2bffe82efb9") 
+              .flavorRef("c2.medium").imageRef("e215580f-73ad-429d-b6f2-5433947433b0").disks(Lists.newArrayList(disk)) 
+              .keyName(keyname) 
+              .metadata(metaData) 
+              .publicIp(publicIp) 
+              .userData("fegrhtht").build(); 
+//createScalingConfig 
+        ScalingConfigCreate config = ASAutoScalingConfigCreate.builder().configName("test-config-name") 
+              .instanceConfig(instanceConfig).build(); 
+        ScalingConfigCreate result = osclient.autoScaling().configs().create(config); 
+        assertNotNull(result.getConfigId()); 
+        return result.getConfigId();  }
+创建伸缩策略
+支持三种伸缩策略类型：定时，周期，告警 ，如果选择告警策略，则选择或者创建的告警只能关联一个弹性伸缩组。
+以下代码提供了创建定时，周期和告警策略，其中周期策略还分为Daily、Weekly和Monthly三种类型。
+private void testCreateAutoScalingPolicy() { 
+     String groupId = "3545d5a1-2d8c-4370-8b95-36f2e8133c24"; 
+//RECURRENCE Daily 
+   ScheduledPolicy scheduledPolicyDaily = ScheduledPolicy.builder().launchTime("01:21") 
+           .recurrenceType(RecurrenceType.DAILY).endTime(getEndTime()).recurrenceValue(null).build(); 
+     ScalingPolicyCreateUpdate policyDaily = ASAutoScalingPolicyCreateUpdate.builder().policyName("SDK-policyName") 
+           .groupId(groupId).policyType(ScalingPolicyType.RECURRENCE).scheduledPolicy(scheduledPolicyDaily).coolDownTime(800) 
+           .scalingPolicyAction(ScalingPolicyAction.builder().operation(Operation.ADD).build()) 
+           .build(); 
+     ScalingPolicyCreateUpdate createDaily = osclient.autoScaling().policies().create(policyDaily); 
+     assertTrue(createDaily != null && !Strings.isNullOrEmpty(createDaily.getPolicyId())); 
+//RECURRENCE1 Weekly 
+    ScheduledPolicy scheduledPolicyWeekly = ScheduledPolicy.builder().launchTime("01:21") 
+           .recurrenceType(RecurrenceType.WEEKLY).startTime(getStartTime()).endTime(getEndTime()).recurrenceValue("1,2,3").build(); 
+     ScalingPolicyCreateUpdate policyWeekly = ASAutoScalingPolicyCreateUpdate.builder().policyName("SDK-policyName") 
+           .groupId(groupId).policyType(ScalingPolicyType.RECURRENCE).scheduledPolicy(scheduledPolicyWeekly).coolDownTime(800) 
+           .scalingPolicyAction(ScalingPolicyAction.builder().operation(Operation.ADD).instanceNumber(1).build()) 
+           .build(); 
+     ScalingPolicyCreateUpdate createWeekly = osclient.autoScaling().policies().create(policyWeekly); 
+     assertTrue(createWeekly != null && !Strings.isNullOrEmpty(createWeekly.getPolicyId())); 
+//RECURRENCE1 Monthly 
+     ScheduledPolicy scheduledPolicyMonthly = ScheduledPolicy.builder().launchTime("01:21") 
+           .recurrenceType(RecurrenceType.MONTHLY).startTime(getStartTime()).endTime(getEndTime()).recurrenceValue("1,2,3,10").build(); 
+     ScalingPolicyCreateUpdate policyMonthly = ASAutoScalingPolicyCreateUpdate.builder().policyName("SDK-policyName") 
+           .groupId(groupId).policyType(ScalingPolicyType.RECURRENCE).scheduledPolicy(scheduledPolicyMonthly).coolDownTime(800) 
+           .scalingPolicyAction(ScalingPolicyAction.builder().operation(Operation.ADD).instanceNumber(1).build()) 
+           .build(); 
+     ScalingPolicyCreateUpdate createMonthly = osclient.autoScaling().policies().create(policyWeekly0); 
+     assertTrue(createMonthly != null && !Strings.isNullOrEmpty(createMonthly.getPolicyId())); 
+//SCHEDULED 
+      ScheduledPolicy scheduledPolicyScheduled = ScheduledPolicy.builder().launchTime("2017-07-24T01:21Z").build(); 
+     ScalingPolicyCreateUpdate policyScheduled = ASAutoScalingPolicyCreateUpdate.builder().policyName("policyTestName") 
+           .groupId(groupId).policyType(ScalingPolicyType.SCHEDULED).scheduledPolicy(scheduledPolicy1).coolDownTime(800) 
+     .scalingPolicyAction(ScalingPolicyAction.builder().operation(Operation.ADD).instanceNumber(1).build()) 
+     .build(); 
+     ScalingPolicyCreateUpdate createScheduled = osclient.autoScaling().policies().create(policyScheduled); 
+     assertTrue(createScheduled != null && !Strings.isNullOrEmpty(createScheduled.getPolicyId())); 
+//ALARM 
+      ScalingPolicyCreateUpdate policyAlarm = ASAutoScalingPolicyCreateUpdate.builder().policyName("policyTestName") 
+           .groupId(groupId).policyType(ScalingPolicyType.ALARM).alarmId("al1499772396965q7BBl9MpR").coolDownTime(800) 
+           .scalingPolicyAction(ScalingPolicyAction.builder().operation(Operation.REMOVE).instanceNumber(1).build()) 
+           .build(); 
+     ScalingPolicyCreateUpdate createAlarm = osclient.autoScaling().policies().create(policyAlarm); 
+     assertTrue(createAlarm!= null && !Strings.isNullOrEmpty(createAlarm.getPolicyId()));  }
+2.2.9 CES OpenStack4j示例
+查询指标列表
+查询系统当前可监控指标列表，可以指定指标命名空间、指标名称、维度、排序方式，起始记录和最大记录条数过滤查询结果。
+下面获取当前租户所有的指标。
+//set filter option 
+MetricFilterOptions config = MetricFilterOptions.create(); 
+MetricFilterOptions options = config.dim(new String[]{"instance_id,5b4c1602-fb6d-4f1e-87a8-dcf21d9654ba"}); 
+options.limit(50); 
+options.order(OrderType.ASC); 
+options.namespace("SYS.ECS"); 
+options.metricName("network_outgoing_bytes_aggregate_rate"); 
+//get some metric 
+List<? extends Metric> list2 = osclient.cloudEye().metrics().getList(options);
+参数	说明	示例
+namespace	指标命名空间，例如弹性云服务器命名空间。	SYS.ECS
+metric_name	指标名称。	disk_read_bytes_rate
+dim	指标的维度，目前最大支持3个维度，从0开始；维度格式为dim.{i}=key,value。	AutoScalingGroup,ca3fb7aa-da18-4abc-8206-630cbbb74e14
+start	分页起始值，格式为：namespace.metric_name.key:value。	SYS.ECS.cpu_util.instance_id:d9112af5-6913-4f3b-bd0a-3f96711e004d
+limit	取值范围(0,1000]，默认值为1000。
+用于限制结果数据条数。	50
+order	用于标识结果排序方法。	用于标识结果排序方法。
+取值说明，默认值为desc。
+asc：升序
+desc：降序
+
+查询告警列表
+查询告警规则列表，可以指定分页条件限制结果数量，可以指定排序规则。
+//set filter option 
+AlarmFilterOptions config = AlarmFilterOptions.create(); 
+AlarmFilterOptions options = config.limit(5); 
+options.order(OrderType.ASC); 
+//get some alarm 
+List<? extends Alarm> list2 = osclient.cloudEye().alarms().getList(options);
+参数	说明	示例
+start	分页起始值，内容为alarm_id	al1498535073312Z27eznaxV
+limit	取值范围(0,100]，默认值为100
+用于限制结果数据条数。	50
+order	用于标识结果排序方法。	用于标识结果排序方法。
+取值说明，默认值为desc。
+asc：升序
+desc：降序
+
+查询单条告警规则信息
+根据告警ID查询告警规则信息。
+//get one alarm 
+List<? extends Alarm> alarm = osclient.cloudEye().alarms().get(ALARM_ID);
+参数	说明	示例
+alarm_id	告警规则的ID。	al1498535073312Z27eznaxV
+
+启停告警规则
+启动或停止一条告警规则。
+//start one alarm 
+ActionResponse actionResponse = osclient.cloudEye().alarms().startAlarm(ALARM_ID); 
+//stop one alarm 
+ActionResponse actionResponse = osclient.cloudEye().alarms().stopAlarm(ALARM_ID);
+参数	说明	示例
+alarm_id	告警规则的ID。	al1498535073312Z27eznaxV
+
+删除告警规则
+删除一条告警规则。
+//delete one alarm 
+ActionResponse actionResponse = osclient.cloudEye().alarms().deleteAlarm(ALARM_ID);
+参数	说明	示例
+alarm_id	告警规则的ID。	al1498535073312Z27eznaxV
+
+查询监控数据
+查询指定时间范围指定指标的指定粒度的监控数据，可以通过参数指定需要查询的数据维度。
+//get one metric data 
+MetricAggregation metricAggregation = osclient.cloudEye().metricsDatas().get( 
+"SYS.ECS", 
+"disk_write_bytes_rate", 
+new Date(1499134191061l), 
+new Date(1499137791061l), 
+Period.REAL_TIME, Filter.AVERAGE, 
+new String[]{"instance_id,9191673e-6532-483c-86d7-7514d7dc4d0a"});
+参数	说明	示例
+namespace	指标命名空间，例如弹性云服务器命名空间。	SYS.ECS
+metric_name	指标名称。	disk_read_bytes_rate
+from	查询数据起始时间，UNIX时间戳，单位毫秒。建议from的值相对于当前时间向前偏移至少1个周期。由于聚合运算的过程是将一个聚合周期范围内的数据点聚合到周期起始边界上，如果将from和to的范围设置在聚合周期内，会因为聚合未完成而造成查询数据为空，所以建议from参数相对于当前时间向前偏移至少1个周期。以5分钟聚合周期为例：假设当前时间点为10:35，10:30~10:35之间的原始数据会被聚合到10:30这个点上，所以查询5分钟数据点时from参数应为10:30或之前。
+说明
+云监控会根据所选择的聚合粒度向前取整from参数。	1499134191061l
+to	查询数据截止时间UNIX时间戳，单位毫秒。from必须小于to。	14991341892581
+period	监控数据粒度。	取值范围：
+	1，实时数据
+	300，5分钟粒度
+	1200，20分钟粒度
+	3600，1小时粒度
+	14400，4小时粒度
+	86400，1天粒度
+filter	数据聚合方式。	max, min, average, sum, variance。
+dim	指标的维度，目前最大支持3个维度，从0开始；维度格式为dim.{i}=key,value，参考弹性云服务器维度。	AutoScalingGroup,ca3fb7aa-da18-4abc-8206-630cbbb74e14
+
+添加监控数据
+添加一条或多条指标监控数据。
+List<CloudEyeMetricData> metrics = new ArrayList<>(); 
+//set dimension 
+CloudEyeMetricDemension.CloudEyeMetricDemensionBuilder dimBuilder = CloudEyeMetricDemension.builder().name("instance_id").value("33328f02-3814-422e-b688-bfdba93d4050"); 
+CloudEyeMetricDemension dim1 = dimBuilder.build(); 
+List<CloudEyeMetricDemension> dimList = new ArrayList<>(); 
+dimList.add(dim1); 
+//set namespace, metric name 
+CloudEyeMetric.CloudEyeMetricBuilder metricBuilder = CloudEyeMetric.builder().namespace("MINE.APP").metricName("test_add_metric_data_1") 
+.dimensions(dimList); 
+//set ttl, collect_time,value,unit 
+CloudEyeMetricData.CloudEyeMetricDataBuilder builder1 = CloudEyeMetricData.builder() 
+.metric(metricBuilder.build()).ttl(172800).collectTime(new Date()).value(60) 
+.unit("%"); 
+CloudEyeMetric.CloudEyeMetricBuilder metricBuilder2 = CloudEyeMetric.builder().namespace("MINE.APP").metricName("cpu_util") 
+.dimensions(dimList); 
+CloudEyeMetricData.CloudEyeMetricDataBuilder builder2 = CloudEyeMetricData.builder() 
+.metric(metricBuilder2.build()).ttl(172800).collectTime(new Date()) .value(70).unit("%"); 
+metrics.add(builder1.build()); 
+metrics.add(builder2.build()); 
+//post metric 
+ActionResponse actionResponse = osclient.cloudEye().metricsDatas().add(metrics);
+参数	说明	示例
+metric	指标数据。	JSON结构
+namespace	指标命名空间，格式为service.item；service和item必须是字符串，必须以字母开头，只能包含0-9/a-z/A-Z/_，总长度最短为3，最大为32，service不能为“SYS”。	ABC.ECS
+metric_name	指标名称，必须以字母开头，只能包含0-9/a-z/A-Z/_，长度最短为1，最大为64。	disk_read_bytes_rate
+dimensions	指标维度列表。单个维度为json对象，结构说明如下
+dimension.name：必须以字母开头，只能包含0-9/a-z/A-Z/_/-，长度最短为1，最大为32。
+dimension.value：必须以字母或数字开头，只能包含0-9/a-z/A-Z/_/-，长度最短为1，最大为64。	instance_id:33328f02-3814-422e-b688-bfdba93d4050
+ttl	数据的有效期，超出该有效期则自动删除该数据，单位秒，最大值604800。	172800
+collect_time	数据收集时间
+UNIX时间戳，单位毫秒。
+说明
+因为客户端到服务器端有延时，因此插入数据的时间戳应该在[当前时间-3天+20秒，当前时间+10分钟-20秒]区间内，保证到达服务器时不会因为传输时延造成数据不能插入数据库。	1502938466458
+value	指标数据的值。	60
+unit	数据的单位。	B
+type	数据的类型，只能是"int"或"float"	int 或者 float
+
+查询配额
+查询用户可以创建的资源配额总数及当前使用量，当前仅有告警规则一种资源类型。
+Quota quotas = osclient.cloudEye().quotas().get();
+2.2.10 DNS OpenStack4j示例
+DNS OpenStack4j示例
+云解析（Domain Name Service）提供高可用，高扩展的权威DNS服务和DNS管理服务，把人们常用的域名或应用资源转换成计算机用于连接的IP地址，从而将最终用户路由到相应的应用资源上。
+创建公网域名
+下面代码为公网域名创建的过程，用户可以根据需求进行相应的参数配置，创建完成后，新创建的域名会在DNS服务的公网域名页面上显示。
+public void CreateZones() {      
+    ZoneBuilder builder = Builders.zone();      
+    Zone zone = builder.name(Name).description(Description).email(Email).ttl(TTL).type(zone_type).build();      
+    Zone zoneResult = osclient.dns().zones().create(zone);      
+    logger.info("Create zone: {}", zoneResult);   
+}
+表2-5 参数说明
+参数	参数说明	取值样例
+Name	从域名注册商处获得的授权域名。	example.com
+Email	可选参数。
+管理该公网域名的管理员邮箱。建议用户使用保留邮箱“HOSTMASTER@域名”作为此管理员邮箱。	HOSTMASTER@example.com
+Description	可选参数。
+域名的描述信息。
+长度不超过255个字符。	This is a zone example.
+zone_type	域名类型，其值可以是公有的或私有的
+	public：互联网上的主机可访问的公网域名
+	private：专用网络域名只能访问指定的VPC中的主机。
+如果该值为空，将创建一个公共区域	public
+ttl	记录集的有效缓存时间，以秒为单位。
+默认值为300
+此值的取值范围为300–2147483647	默认为“5min”，即300s。
+
+删除公网域名
+当用户无需使用云解析服务托管该公网域名时，可以使用删除公网域名功能。删除公网域名后，该公网域名包含的域名将无法再被解析。
+public void DeleteZones() {      
+    Zone deletedZone = osclient.dns().zones().delete(ZONE_ID);      
+    Assert.assertEquals(deletedZone.getStatus(), org.openstack4j.model.dns.v2.Status.PENDING_DELETE);      
+    logger.info("Delete zone: {}", deletedZone);      
+    if (osclient.dns().zones().get(ZONE_ID) == null) {         
+        System.out.println("Confirmed delete zone");      
+    }   
+}
+创建内网域名
+用户在VPC内使用云解析服务进行内网域名托管，需使用增加内网域名功能，OpenStack4j允许创建一个内网域名。 详细操作如下：
+1.	指定需要关联的VPC。
+2.	创建内网域名。
+下面代码为内网域名创建的过程，用户可以根据需求进行相应的参数配置，创建完成后，新增的域名会在DNS服务的内网域名页面上显示。
+public void CreatePrivateZones() {      
+    DesignateZone.Router router = new DesignateZone.Router(ROUTER_ID,REGION, Status);      
+    ZoneBuilder builder = Builders.zone();      
+    Zone sourceZone = builder.name(Name).description(Description).email(Email).ttl(TTL).type(zone_type).router(router).build();      
+    Zone zoneResult = osclient.dns().zones().create(sourceZone);         logger.info("Create zone: {}", zoneResult);   
+}
+表2-6 参数说明
+参数	参数说明	取值样例
+ROUTER_ID	内网域名要关联的VPC ID	cd27d47c-ad5a-40a7-8b54-3504a5885d55
+REGION	选择要关联VPC的区域	eu-de
+Status	VPC 状态信息
+此值包括：PENDING_CREATE,  ACTIVE, PENDING_DELETE, ERROR	-
+Name	从域名注册商处获得的授权域名	example.com
+Email	可选参数。
+管理该内网域名的管理员邮箱。建议用户使用保留邮箱“HOSTMASTER@域名”作为此管理员邮箱。	HOSTMASTER@example.com
+Description	可选参数。
+域名的描述信息。
+长度不超过255个字符。	This a public zone.
+zone_type	域名类型，其值可以是公有的或私有的
+	public：互联网上的主机可访问的公网域名
+	private：专用网络域名只能访问指定的VPC中的主机
+如果该值为空，将创建一个公共区域	private
+ttl	记录集的有效缓存时间，以秒为单位。
+默认值为300
+此值的取值范围为300–2147483647	默认为“5min”，即300s。
+
+关联VPC
+当用户创建的内网域名需要关联VPC时，可以利用OpenStack4j在OTC上进行关联操作。 详细操作如下：
+1.	指定需要关联的VPC。
+2.	选择待关联VPC的内网域名并进行关联。
+public void AssociateRouter() {      
+    DesignateZone.Router router = new DesignateZone.Router(ROUTER_ID,REGION, Status);      
+    DesignateZone.Router routerResult = osclient.dns().zones().associateRouter(zoneId,router);      
+    logger.info("Associate router: {}", routerResult); 
+}
+解关联VPC
+当用户创建的内网域名不需要关联某个VPC时，可以利用OpenStack4j进行进行解关联操作。代码如下：
+public void DisassociateRouter() {       
+    DesignateZone.Router router = new DesignateZone.Router("cd27d47c-ad5a-40a7-8b54-3504a5885d5", REGION, null);       
+    DesignateZone.Router routerResult = osclient.dns().zones().disassociateRouter("2c9eb1555c76c567015c779282510120", router);       
+    logger.info("Disassociate router: {}", routerResult);      
+}
+删除内网域名
+当用户无需使用云解析服务托管该内网域名时，可以使用删除内网域名功能。删除内网域名后，该内网域名包含的域名将无法再被解析。
+执行删除内网域名操作前，请确认已备份该内网域名下所有用户创建的记录集。代码如下：
+public void DeleteZones() {      
+    Zone deletedZone = osclient.dns().zones().delete(ZONE_ID);      
+    Assert.assertEquals(deletedZone.getStatus(), org.openstack4j.model.dns.v2.Status.PENDING_DELETE);      
+    logger.info("Delete zone: {}", deletedZone);      
+    if (osclient.dns().zones().get(ZONE_ID) == null) {         
+        System.out.println("Confirmed delete zone");      
+    }   
+}
+2.2.11 ELB OpenStack4j示例
+创建Load Balancer
+下面是创建负载均衡器的方法。
+public ELBJob create(LoadBalancerCreate loadBalancer) { 
+    checkArgument(loadBalancer != null, "loadBalancer is required");     checkArgument(!Strings.isNullOrEmpty(loadBalancer.getName()), "name is required"); 
+    checkArgument(!Strings.isNullOrEmpty(loadBalancer.getVpcId()), "vpcId is required"); 
+    checkArgument(loadBalancer.getType() != null, "type is required"); 
+    checkArgument(loadBalancer.getAdminStateUp() != null, "adminStateUp is required"); 
+    if(Type.INTERNAL.name().equals(loadBalancer.getType())) {                checkArgument(!Strings.isNullOrEmpty(loadBalancer.getVipSubnetId()), "vipSubnetId is required when type is Internal"); 
+        checkArgument(!Strings.isNullOrEmpty(loadBalancer.getAzId()), "azId is required when type is Internal"); 
+        checkArgument(!Strings.isNullOrEmpty(loadBalancer.getTenantId()), "tenantId is required when type is Internal"); 
+    }       
+    if(Type.EXTERNAL.name().equals(loadBalancer.getType())) {        checkArgument(loadBalancer.getBandwidth() != null, "bandwidth is required when type is External"); 
+    } 
+    return post(ELBJob.class, uri(API_PATH)).entity(loadBalancer).execute(); 
+}
+创建Listener
+下面是创建监听器的方法，只有当存在load balancer的前提下才能创建listener。
+public ListenerCreate create(ListenerCreate listener) { 
+   checkArgument(listener != null, "listener is required"); 
+   checkArgument(!Strings.isNullOrEmpty(listener.getName()), "name is required"); 
+   checkArgument(!Strings.isNullOrEmpty(listener.getLoadBalancerId()), "loadBalancerId is required"); 
+   checkArgument(listener.getProtocol() != null, "protocol is required"); 
+   checkArgument(listener.getPort() != null, "port is required"); 
+   checkArgument(listener.getBackendProtocol() != null, "backendProtocol is required"); 
+   checkArgument(listener.getBackendPort() != null, "backendPort is required"); 
+   checkArgument(listener.getLbAlgorithm() != null, "lbAlgorithm is required"); 
+ 
+   return post(ELBListenerCreate.class, uri(API_PATH)).entity(listener).execute(); 
+}
+创建Health Check
+下面是健康检查的方法，只有当存在 listener 的前提下才能创建health check。
+public HealthCheck create(HealthCheckCreate healthCheck) { 
+   checkArgument(healthCheck != null, "healthCheck is reuquired"); 
+   checkArgument(!Strings.isNullOrEmpty(healthCheck.getListenerId()), "listenerId is required"); 
+ 
+   return post(ELBHealthCheck.class, uri(API_PATH)).entity(healthCheck).execute(); 
+}
+添加Member
+下面是向 listener 中添加member的方法。
+public ELBJob create(String listenerId, List<ServerCreate> servers) { 
+   checkArgument(!Strings.isNullOrEmpty(listenerId), "listenerId is required"); 
+   checkArgument(servers != null && !servers.isEmpty(), "servers is required"); 
+   for (ServerCreate server : servers) { 
+      checkArgument(server != null, "server can not be null"); 
+      checkArgument(!Strings.isNullOrEmpty(server.getServerId()), "serverId is required"); 
+      checkArgument(!Strings.isNullOrEmpty(server.getAddress()), "server address is required"); 
+   } 
+ 
+   return post(ELBJob.class, uri("%s/%s/members", API_PATH, listenerId)).entity(servers).execute(); 
+}
+创建Certificate
+下面是创建证书的方法。
+public Certificate create(Certificate cert) { 
+   checkArgument(cert != null, "cert is required"); 
+   checkArgument(!Strings.isNullOrEmpty(cert.getCertificate()), "certificate is required"); 
+   checkArgument(!Strings.isNullOrEmpty(cert.getPrivateKey()), "privateKey is required"); 
+ 
+   return post(ELBCertificate.class, uri(API_PATH)).entity(cert).execute(); 
+}
+2.2.12 VBS OpenStack4j示例
+创建云硬盘备份
+下面代码为创建云硬盘备份的过程，用户可以根据需求进行相应的参数配置，创建完成后，新创建的备份会在VBS的备份列表显示。
+public static void createBackup() { 
+    AsyncVolumeBackupCreate vbc = Builders.asyncVolumeBackupCreate() 
+            .name(backupName) 
+            .volumeId(volume.getId()) 
+            .build(); 
+    AsyncVolumeBackupJob job = osclient.blockStorage().asyncBackups().create(vbc); 
+    Assert.assertNotNull(job.getId()); 
+    backupJobId = job.getId(); 
+}
+请求参数说明：
+名称	是否必选	参数类型	说明
+backup	是	dict	待创建的备份。
+volume_id	是	string	需要进行备份的磁盘ID。
+snapshot_id	否	string	需要进行备份的磁盘对应的快照ID。
+name	是	string	备份名称，最大支持64个字符(不区分中英文)，只能是中文、英文、数字、下划线（_）和中划线（-）。
+description	否	string	备份描述，最大支持64个字符(不区分中英文)，且不能包含“<”和“>”。
+
+查询备份详情列表
+下面代码为查询备份列表的过程，返回每个备份的详细信息，用户可以根据需求进行相应的参数配置。
+public static void queryNativeBackupsDetail(){ 
+    // 无查询条件 
+    List<? extends VolumeBackup> list = osclient.blockStorage().backups().list(true); 
+    Assert.assertNotEquals(list.size(), 0); 
+ 
+    // 条件查询 
+    HashMap<String, String> filter = new HashMap<>(); 
+    filter.put("name", backupName); 
+    List<? extends VolumeBackup> list2 = osclient.blockStorage().backups().list(true, filter); 
+    for (VolumeBackup backup: list2) { 
+        Assert.assertEquals(backup.getName(), backupName); 
+    } 
+}
+请求参数说明：
+名称	是否必选	参数类型	说明
+name	否	string	指定查询的备份名称。用于过滤名称为指定字符串的备份。
+status	否	string	指定查询的备份状态。用于过滤特定状态的备份。可选的值目前只支持：“available”，“error”，“restoring”，“creating”，“deleting”，“error_restoring”。
+offset	否	int	指定查询信息列表的偏移量。
+limit	否	int	指定返回结果个数限制。
+volume_id	否	string	指定查询备份的磁盘ID。用于过滤指定磁盘ID对应的备份。
+
+从备份恢复磁盘
+下面代码为选择一个备份恢复到磁盘的过程，用户可以根据需求进行相应的参数配置。
+public static void restoreBackup() { 
+    AsyncVolumeBackupJob job = osclient.blockStorage() 
+            .asyncBackups() 
+            .restore(backupId, volume.getId()); 
+    Assert.assertNotNull(job.getId()); 
+}
+请求参数说明：
+名称	是否必选	参数类型	说明
+restore	是	dict	标记从备份恢复磁盘操作。
+backup_id	是	string	需要恢复的备份ID
+volume_id	是	string	将要被恢复的磁盘ID。
+
+删除备份
+下面代码为删除一个备份的过程，用户可以根据需求进行相应的参数配置。
+public static void deleteNativeBackup()  
+{ 
+    ActionResponse delete = osclient.blockStorage().backups().delete(backupId); 
+    Assert.assertEquals(delete.isSuccess(), true); 
+}
+请求参数说明：
+名称	是否必选	参数类型	说明
+tenant_id	是	string	租户ID。
+backup_id	是	string	需要恢复的备份ID。
+
+创建备份策略
+下面代码为备份策略的创建过程，用户可以根据需求进行相应的参数配置。
+public static void createPolicy()  
+{ 
+    // 先创建 scheduled policy 
+    VBSVolumeBackupScheduledPolicy scheduledPolicy = VBSVolumeBackupScheduledPolicy.builder() 
+            .frequency(10) 
+            .maxBackupAmount(10) 
+            .retainFirstBackupOfCurrentMonth(true) 
+            .startTime("01:00") 
+            .status(VolumeBackupPolicy.VolumeBackupPolicyStatus.OFF) 
+            .build(); 
+    Assert.assertNotNull(scheduledPolicy); 
+ 
+    // 创建 backup policy 对象 
+    VolumeBackupPolicy create = VBSVolumeBackupPolicy.builder() 
+            .name(policyName) 
+            .scheduledPolicy(scheduledPolicy) 
+            .build(); 
+    VolumeBackupPolicy policy = osclient.blockStorage().policies().create(create); 
+    Assert.assertNotNull(policy.getId()); 
+
+请求参数说明：
+名称	是否必选	参数类型	说明
+backup_policy_name	是	string	备份策略名称
+只能由数字、字母、汉字、下划线、中划线组成，同时不能以default开头，长度1到64位。
+scheduled_policy	是	dict	调度策略详情。
+start_time	是	string	备份开始时间，需要转化成本地时间对应的UTC时间（目前只支持整点）。
+格式为HH:mm
+frequency	否	integer	备份间隔（1-14天），该字段和week_frequency字段二选一，如果同时设置，默认以该字段为准。
+week_frequency	否	list<dict>	按指定周进行备份，取值为以下值的一个或者多个：
+SUN，MON，TUE，WED，THU，FRI，SAT
+rentention_num	否	integer	备份保留个数（最小值为2），该字段和rentention_day字段二先一，如果同时设置，默认以该字段为准。
+rentention_day	否	integer	备份保留天数。
+remain_first_backup_of_curMonth	是	string	是否保留当月的第一个备份。
+	Y	N
+status	是	string	策略状态：启用或停用。
+	ON
+	OFF
+
+删除备份策略
+下面代码为备份策略的删除过程，用户可以根据需求进行相应的参数配置。
+public static void deletePolicy() { 
+    osclient.blockStorage().policies().delete(policyId); 
+    List<? extends VolumeBackupPolicy> policies = osclient.blockStorage().policies().list(); 
+    boolean isSuccess = true; 
+    for (VolumeBackupPolicy policy: 
+            policies) { 
+        if (policy.getId().equals(policyId)) { 
+            isSuccess = false; 
+            break; 
+        } 
+    } 
+    Assert.assertEquals(isSuccess, true); 
+} 
+
+请求参数说明：
+名称	是否必选	参数类型	说明
+tenant_id	是	string	租户ID
+policy_id	是	string	策略ID
+
+查询备份策略
+下面代码为查询备份策略的过程，用户可以根据需求进行相应的参数配置。
+public static void queryPolicy() { 
+    List<? extends VolumeBackupPolicy> policies = osclient.blockStorage().policies().list(); 
+    boolean isSuccess = false; 
+    for (VolumeBackupPolicy policy: 
+         policies) { 
+        if (policy.getName().equals(policyName)) { 
+            isSuccess = true; 
+            policyId = policy.getId(); 
+            break; 
+        } 
+    } 
+    Assert.assertEquals(isSuccess, true); 
+} 
+
+2.2.13 SMN OpenStack4j示例
+创建topic
+创建一个Topic，用户最多允许创建3000个Topic。接口是幂等的，如果存在同名的Topic，则返回成功，status code为200，否则status code为201。
+以下代码显示了创建topic的过程。
+Topic topic = osclient.notification().topics().create("topic-name", "display-name");
+订阅
+为指定Topic添加一个订阅者，如果订阅者的状态为未确认，则向订阅者发送一个确认的消息。待订阅者进行ConfirmSubscription确认后，该订阅者才能收到Topic发布的消息。接口是幂等的，如果添加已存在的订阅者，则返回成功，且status code为200，否则status code为201。
+以下代码显示了创建topic的过程，其中参数tp为topicUrn。
+SubscriptionCreate subscribe = SubscriptionCreate.builder().topicUrn("topic-urn").endpoint("xx@xx.com") .protocol(Protocol.EMAIL).remark("sdk-unittest").build(); 
+Subscription subscription = osclient.notification().subscriptions().subscribe(subscribe);
+消息发布
+将消息发送给Topic的所有订阅端点。当返回消息ID时，该消息已被保存并开始尝试将其推送给主题的订阅者。消息格式，取决于该主题每一个订阅者的通知协议。
+代码如下：
+MessageIdResponse message = osclient.notification().messages().publish("topic-urn", "subject", "message-content");
+2.2.14 AntiDDoS OpenStack4j示例
+查询Anti-DDoS配置可选范围
+查询系统支持的Anti-DDoS防护策略配置的可选范围，用户根据范围列表选择适合自已业务的防护策略进行Anti-DDoS流量清洗。
+认证代码示例如下：
+public void listConfigs() 
+    { 
+        AntiDDoSServices antiDDoSServices = osclient.antiDDoS(); 
+        AntiDDoSService antiDDoSService=antiDDoSServices.antiddos(); 
+        AntiDDoSConfig configs = antiDDoSService.listConfigs(); 
+        LOGGER.info("{}", configs); 
+    }
+开通Anti-DDoS服务
+用户开通Anti-DDoS流量清洗防护。作为异步接口，调用成功，只是说明服务节点收到了开通请求，开通是否成功需要通过任务查询接口查询该任务的执行状态。
+认证代码示例如下：
+public void createAntiDDoS() throws InterruptedException 
+    { 
+        AntiDDoS entity = AntiDDoS.builder() 
+            .enableL7(true) 
+            .trafficPos(TrafficPos.POS_1) 
+            .httpRequestPos(HttpRequestPos.POS_1) 
+            .cleaningAccessPos(CleaningAccessPos.POS_1) 
+            .appType(AppType.Type_0) 
+            .build(); 
+        AntiDDoSServices antiDDoSServices = osclient.antiDDoS(); 
+        AntiDDoSService antiDDoSService =antiDDoSServices.antiddos(); 
+        Task task = antiDDoSService.create(entity, floatingIpId); 
+        LOGGER.info("{}", task); 
+        taskId = task.getTaskId(); 
+        waitTaskFinish(taskId);    } 
+   } 
+}
+关闭Anti-DDoS服务
+用户关闭Anti-DDoS流量清洗防护。作为异步接口，调用成功，只是说明服务节点收到了关闭防护请求，操作是否成功需要通过任务查询接口查询该任务的执行状态。
+认证代码示例如下：
+public void deleteAntiDDoS() 
+        throws InterruptedException 
+    { 
+        AntiDDoSServices antiDDoSServices = osclient.antiDDoS(); 
+        AntiDDoSService antiDDoSService=antiDDoSServices.antiddos(); 
+        Task task = antiDDoSService.delete(floatingIpId); 
+        LOGGER.info("{}", task); 
+        waitTaskFinish(task.getTaskId()); 
+}
+查询Anti-DDoS服务
+查询配置的Anti-DDoS防护策略，用户可以查询指定EIP的Anti-DDoS防护策略。
+认证代码示例如下：
+public void getAntiDDoS() 
+    { 
+        AntiDDoSServices antiDDoSServices = osclient.antiDDoS(); 
+        AntiDDoSService antiDDoSService =antiDDoSServices.antiddos(); 
+        AntiDDoS antiDDoS = antiDDoSService.get(floatingIpId); 
+        LOGGER.info("{}", antiDDoS); 
+    }
+更新Anti-DDoS服务
+更新指定EIP的Anti-DDoS防护策略配置。调用成功，只是说明服务节点收到了关闭更新配置请求，操作是否成功需要通过任务查询接口查询该任务的执行状态。
+认证代码示例如下：
+public void updateAntiDDoS() throws InterruptedException 
+    { 
+        AntiDDoSServices antiDDoSServices = osclient.antiDDoS(); 
+        AntiDDoSService antiDDoSService =antiDDoSServices.antiddos(); 
+        AntiDDoS entity = antiDDoSService.get(floatingIpId); 
+        entity = entity.toBuilder().appType(AppType.Type_1).build(); 
+        Task task = osclient.antiDDoS().antiddos().update(entity, floatingIpId); 
+        LOGGER.info("{}", task); 
+        waitTaskFinish(task.getTaskId()); 
+    }
+查询Anti-DDoS任务
+用户查询指定的Anti-DDoS防护配置任务，得到任务当前执行的状态。
+认证代码示例如下：
+public void getTask() 
+    { 
+        AntiDDoSServices antiDDoSServices = osclient.antiDDoS(); 
+        AntiDDoSService antiDDoSService =antiDDoSServices.antiddos(); 
+        Task task = antiDDoSService.getTask(taskId); 
+        LOGGER.info("{}", task); 
+}
+查询EIP防护状态列表
+查询用户所有EIP的Anti-DDoS防护状态信息，用户的EIP无论是否绑定到云服务器，都可以进行查询。
+认证代码示例如下：
+public void listStatuses() 
+{ 
+        AntiDDoSServices antiDDoSServices = osclient.antiDDoS(); 
+        AntiDDoSService antiDDoSService =antiDDoSServices.antiddos(); 
+        AntiDDoSStatus statuses = antiDDoSService.listStatus(); 
+        LOGGER.info("{}", statuses); 
+}
+查询指定EIP防护状态
+查询指定EIP的Anti-DDoS防护状态。
+认证代码示例如下：
+public void getStatus() 
+    { 
+        AntiDDoSServices antiDDoSServices = osclient.antiDDoS(); 
+        AntiDDoSService antiDDoSService =antiDDoSServices.antiddos(); 
+        AntiDDoSStatusDetail status = antiDDoSService.getStatus(floatingIpId); 
+        LOGGER.info("{}", status); 
+}
+查询指定EIP防护流量
+查询指定EIP在过去24小时之内的防护流量信息，流量的间隔时间单位为5分钟。
+认证代码示例如下：
+public void dailyReport() 
+    { 
+        AntiDDoSServices antiDDoSServices = osclient.antiDDoS(); 
+        AntiDDoSService antiDDoSService =antiDDoSServices.antiddos(); 
+        List<? extends AntiDDoSDailyData> dailyReport = antiDDoSService.dailyReport(floatingIpId); 
+        LOGGER.info("{}", dailyReport); 
+}
+查询指定EIP异常事件
+查询指定EIP在过去24小时之内的异常事件信息，异常事件包括清洗事件和黑洞事件，查询延迟在5分钟之内。
+认证代码示例如下：
+public void listLog() 
+    { 
+        AntiDDoSServices antiDDoSServices = osclient.antiDDoS(); 
+        AntiDDoSService antiDDoSService =antiDDoSServices.antiddos(); 
+        List<? extends AntiDDoSLog> logs = antiDDoSService.listLogs(floatingIpId); 
+        LOGGER.info("{}", logs); 
+         
+        AntiDDoSLogListOptions options = AntiDDoSLogListOptions.create().limit(1).offset(1); 
+        List<? extends AntiDDoSLog> logs2 = osclient.antiDDoS().antiddos().listLogs(floatingIpId, options); 
+        LOGGER.info("{}", logs2); 
+}
+查询周防护统计情况
+查询用户所有Anti-DDoS防护周统计情况，包括一周内DDoS拦截次数和攻击次数、以及按照被攻击次数进行的排名信息等统计数据。
+认证代码示例如下：
+public void weeklyReport() 
+    { 
+        AntiDDoSServices antiDDoSServices = osclient.antiDDoS(); 
+        AntiDDoSService antiDDoSService =antiDDoSServices.antiddos(); 
+        AntiDDoSWeeklyData weekly = antiDDoSService.weeklyReport(); 
+        LOGGER.info("{}", weekly); 
+         
+        Calendar cal = Calendar.getInstance(); 
+        cal.add(Calendar.HOUR, -10); 
+        AntiDDoSWeeklyData weekly2 = osclient.antiDDoS().antiddos().weeklyReport(cal.getTime()); 
+        LOGGER.info("{}", weekly2); 
+    }
+查询告警配置信息
+查询用户配置信息，用户可以通过此接口查询是否接收某类告警，同时可以配置是手机短信还是电子邮件接收告警信息。
+认证代码示例如下：
+public void queryWarningInfo() 
+    { 
+        AntiDDoSServices antiDDoSServices = osclient.antiDDoS(); 
+        AntiDDoSWarn query = antiDDoSServices.warnalert().query(); 
+        LOGGER.info("{}", query); 
+}
+2.2.15 DMS OpenStack4j示例
+分布式消息服务（Distributed Message Service）是一项基于高可用分布式集群技术的消息中间件服务，具有大规模、高可靠、高并发访问、可扩展且完全托管的特点。DMS帮助云端的应用程序组件去耦合，具有很高的成本效益。
+创建队列
+下面代码为消息队列的创建，创建成功后，可往此队列上生产消息，使用示例：
+String name = randomName(); 
+String description = "sdk-unittest" 
+Queue queue = null; 
+queue = osclient.messageQueue().queue().create(name, description);
+创建消费组
+下面代码为消费组的创建，创建成功后该消费组可消费队列上的消息，使用示例：
+List<ConsumerGroup> groups = null; 
+List<String> groupNames = Lists.newArrayList("consumer-group-1", "consumer-group-2"); 
+queueId queueID = queue.getId(); 
+groups = osclient.messageQueue().consumerGroups().create(queueID, groupNames);
+生产消息
+下面代码为生产消息的过程，使用示例：
+public void testProduceMessage() { 
+HashMap<String, Object> attributes1 = Maps.newHashMap(); 
+attributes1.put("attr1", 1); 
+attributes1.put("attr2", false); 
+QueueMessage message = QueueMessage.builder().body("sdk-unittests").attributes(attributes1).build(); 
+ActionResponse produce = osclient.messageQueue().messages().produce(queue.getId(), message); 
+}
+消费消息
+下面代码为消费消息的过程，使用示例：
+public void testConsumeMessages() { 
+ConsumerGroup consumerGroup1 = groups.get(0); 
+List<QueueMessageWithHandler> all = Lists.newArrayList(); 
+for (int i = 0; i < 3; i++) { 
+List<QueueMessageWithHandler> temp = osclient.messageQueue().messages().consume(queue.getId(), consumerGroup1.getId(), 5, 10); 
+all.addAll(temp); 
+} 
+}
+2.3 Python
+2.3.1 Python OpenStack SDK简介
+什么是Python OpenStack SDK?
+Python OpenStack SDK是一个LIB库的集合，用于在基于OpenStack的云平台上创建应用程序。该项目的目标是帮助用户与OpenStack服务进行交互，同时提供完整的文档、示例和工具。
+API与Python OpenStack SDK之间的兼容性
+Python OpenStack SDK 0.9.16与原生OpenStack API之间的兼容性见下表。详情请参见A.2  Python 章节。
+Python OpenStack SDK 组件	服务	版本
+Keystone	IAM	V3
+Nova	ECS	V2
+Neutron	VPC	V2.0
+Cinder	EVS	V2
+Glance	IMS	V2
+
+2.3.2 入门
+前提条件
+1.	已经获取相关API文档。
+登录以下网站获取API相关文档：
+http://developer.hwclouds.com/index.html
+通过这些文档，可以学习云平台所支持的API参数。
+2.	已获取Python OenStack SDK的官方文档。
+登录以下网站获取Python OpenStack SDK 的官方文档：
+https://developer.openstack.org/sdks/python/openstacksdk/users/index.html
+了解如何使用Python OpenStack SDK对用户而言非常重要。
+3.	已经申请到云平台账号，并开通所需的服务。
+4.	python-openstacksdk 适用于 Python 2.7.x 和 3.5.x 系列版本。
+5.	欲了解Python SDK项目的源代码，请访问如下地址。
+https://github.com/huawei/python-openstacksdk
+SDK获取和安装
+请从GitHub 上下载源代码进行安装。
+cd your-workspace-folder 
+git clone https://github.com/Huawei/python-openstacksdk huawei-python-openstacksdk 
+cd huawei-python-openstacksdk 
+# install master 
+git checkout master 
+pip install -r requirements.txt 
+python setup.py install
+开始使用
+配置要访问服务的endpoint，创建连接，然后调用SDK来访问服务的API。
+import os 
+ 
+from openstack import connection 
+ 
+os.environ.setdefault( 
+'OS_CLOUD_EYE_ENDPOINT_OVERRIDE', 
+'https://ces.example.com/V1.0/%(project_id)s' 
+) 
+ 
+os.environ.setdefault( 
+'OS_AUTO_SCALING_ENDPOINT_OVERRIDE', 
+('https://as.example.com' 
+'/autoscaling-api/v1/%(project_id)s') 
+) 
+ 
+os.environ.setdefault( 
+'OS_DNS_ENDPOINT_OVERRIDE', 
+'https://dns.example.com' 
+) 
+ 
+os.environ.setdefault( 
+'OS_VOLUME_BACKUP_ENDPOINT_OVERRIDE', 
+'https://vbs.example.com/v2/%(project_id)s' 
+) 
+ 
+os.environ.setdefault( 
+'OS_LOAD_BALANCER_ENDPOINT_OVERRIDE', 
+'https://elb.example.com/v1.0/%(project_id)s' 
+) 
+ 
+conn = connection.Connection(auth_url="https://iam.example.com/v3", 
+project_id="replace-with-your-projectid", 
+user_domain_id="replace-with-your-domainid", 
+username="replace-with-your-username", 
+password="replace-with-your-password")
+	上述代码中example的格式为：“区域.云平台域名”，参数详情可以访问这里了解。
+	单击此处获取使用Python SDK的完整代码示例，该文件同时提供了服务的endpoint设置格式，请参考。
+2.3.3 IAM Python OpenStack SDK示例
+服务认证
+IAM服务提供API客户端认证。经IAM授权后，可以调用其他服务API，例如用于创建ECS所用的API。
+经授权之后，可以管理IAM、ECS、EVS、VPC和RTS服务。
+认证码示例如下：
+def create_connection(auth_url, region, project_name, username, password, user_domain_name):  
+    return connection.Connection(  
+        'auth_url': auth_url,  
+        'project_name': project_name,  
+        'username': username,  
+        'password': pasword,  
+        "region": region,  
+        "user_domain_name":user_domain_name  
+        ) 
+参数说明见下表。
+表2-7 参数说明
+参数	说明
+auth_url	指IAM鉴权URL。
+username	用户名。
+user_domain_name	指用户子字符串。
+password	指密码。
+project-name	详情请参见常见问题 3.3 如何获取domain_name、project_name和project_id ?
+
+
+2.3.4 IMS Python OpenStack SDK示例
+公共镜像
+公共镜像是一种被广泛使用的标准镜像。每个公共镜像都包含一个OS和多个预安装公共应用，并且可对所有用户可见。
+按照下图所示，从控制台获取镜像ID。
+ 
+或者，还可以使用以下代码列出所有镜像：
+def list_images(conn):  
+    print("List Images:")  
+    for image in conn.image.images():  
+        print(image)
+使用Python OpenStack SDK创建私有镜像
+IMS支持原生OpenStack Glance v2镜像API。通过该API，可以使用镜像文件创建私有镜像。所支持镜像类型包括vhd、zvhd、qcow2和vmdk。
+下文以QCOW2格式的镜像为例。镜像上传需要很长一段时间，这取决于镜像大小和网络质量。
+def upload_image(conn):  
+    #upload the image  
+    img =conn.image.upload_image(  
+        name='name',  
+        disk_format='qcow2',  
+        container_format='bare',  
+        properties='{"description": "cirros image"}',  
+        min_disk=4,  
+        data=open('cirros.img', 'rb')  
+    )  
+    # wait until the image to be active status.  
+    activeFlag = False  
+    i = 1  
+    while(i < 10):  
+        status =conn.image.get_image(img.id).status   
+        print status  
+        if(status == 'active'):  
+            activeFlag = True  
+            break;  
+            i = i + 1  
+            sleep(60)  
+        if( not activeFlag):  
+            print 'Image upload failed'
+表2-8 参数说明
+参数	说明	示例
+diskFormt	指硬盘格式。	qcow2
+IMS支持vhd、zvhd、qcow2和vmdk 格式镜像。
+data	指待上传镜像文件。	open('cirros.img', 'rb')
+cirros.img是待上传镜像文件的名称。
+
+2.3.5 VPC Python OpenStack SDK示例
+VPC服务Python OpenStack SDK示例
+使用虚拟私有云（VPC）服务，可以为弹性云服务器（ECS）提供本地隔离、可配置和可管理的虚拟网络，提高云资源的安全性，简化网络部署。
+一个典型的VPC由路由器、网络和子网组成，如下图所示：
+ 
+可以在控制台创建VPC，然后获取UUID：
+ 
+	路由器：路由器是一个逻辑实体，可以跨越内部子网转发报文，然后，通过合适的外部网关，在外部网络上对报文进行网络地址转换。
+	网络：网络是一个隔离的2层网段，与物理组网世界的VLAN类似。
+	子网：子网是由v4或v6 IP地址和相关配置状态组成的地址段。
+创建VPC和子网
+可以使用Python OpenStack SDK创建子网。详细操作如下：
+1.	创建路由器。
+2.	创建网络。
+3.	创建子网。
+4.	连接子网与路由器。
+以下代码所示为网络创建过程，您可以根据需要修改这些配置。创建路由器、网络和子网并将子网与路由器连接之后，您可以在控制台看到所创建的新VPC。
+def create_VPC(conn) :  
+    #create a router  
+    testRouterName = "PythonSDKVPC"  
+    router = conn.network.create_router(  
+        name=testRouterName  
+        )  
+    #create_network  
+    testNetworkName = "PythonSDKNet"  
+    network = conn.network.create_network(  
+        name=testNetworkName           
+        )  
+    #create a subnet  
+    testSubnetName = "PythonSDKSubnet"  
+    subnet = conn.network.create_subnet(  
+        name = testSubnetName,  
+        is_dhcp_enabled = True,  
+        cidr = "192.168.1.0/24",  
+        network_id = network.id  
+        )  
+    #connect the subnet to the router, make the subnet connect to the internet.  
+    conn.network.add_interface_to_router(router, subnet.id)
+删除VPC
+删除VPC之前，需要删除VPC 子网中所创建的ECS，然后取消路由器和子网之间的关联，删除子网和网络。
+执行ECS删除命令并确保根据ECS删除状态删除ECS之后，您可以删除网络。关于如何删除网络，请参见以下代码：
+def deleteVPC(conn):  
+    conn.network.remove_interface_from_router(router, subnetId)  
+    conn.network.delete_subnet(subnetId)  
+    conn.network.delete_network(networkdId)  
+    conn.network.delete_router(routerId)
+外部网络
+外部网络是属性router:external被设定为true的网络。该网络可用于分配EIP。在将EIP添加到ECS上之后，即可通过互联网访问ECS。
+无需创建外部网络，因为外部网络已经存在。
+可以使用以下代码，获取外部网络：
+def get_external_network(self):  
+    for network_each in self.conn.network.networks():  
+        if network_each.is_router_external == True :  
+           return network_each
+2.3.6 ECS Python OpenStack SDK示例
+创建ECS
+1.	获取flavor ID。
+可以使用以下代码，查询所有flavors，然后使用以下符合要求的Flavor ID创建ECS：
+def list_flavors(conn):  
+    print("List Flavors:")  
+    for flavor in conn.compute.flavors():  
+    print(flavor)
+2.	创建安全组。
+关于如何创建安全组，请参见3.2 如何创建安全组?
+或者，您可以根据以下代码，使用Python OpenStack SDK 创建安全组：
+def create_security_groups(conn):  
+    #create_SG  
+    testSGName = "PythonSDKSG"  
+    createdSG = conn.network.create_security_group(  
+        name = testSGName  
+        )  
+    # open a port.  
+    conn.network.security_group_open_port(createdSG.id, 8080,     protocol='tcp')  
+    #allow ping  
+    conn.network.security_group_allow_ping(createdSG.id)  
+    # More detailed rules  
+    IPV4 = 'IPv4'  
+    PROTO = 'tcp'  
+    PORT = 22  
+    DIR = 'ingress'  
+    conn.network.create_security_group_rule(  
+        direction=DIR,   
+        ethertype=IPV4,  
+        port_range_max=PORT,  
+        port_range_min=PORT,  
+        protocol=PROTO,   
+        security_group_id=createdSG.id  
+        )
+3.	创建秘钥对.
+关于如何创建秘钥对，详情请参见3.1 如何在控制台上创建秘钥对?
+或者，您可以根据以下代码，使用Python OpenStack SDK 创建秘钥对:
+def create_keypair(conn):  
+    keypair = conn.compute.find_keypair(KEYPAIR_NAME)  
+    if not keypair:  
+        print("Create Key Pair:")  
+        keypair = conn.compute.create_keypair(name=KEYPAIR_NAME)  
+        print(keypair)  
+        try:  
+            os.mkdir(SSH_DIR)  
+        except OSError as e:  
+            if e.errno != errno.EEXIST:  
+                raise e  
+        with open(PRIVATE_KEYPAIR_FILE, 'w') as f:  
+            f.write("%s" % keypair.private_key)  
+        os.chmod(PRIVATE_KEYPAIR_FILE, 0o400)  
+    return keypair
+4.	创建ECS。
+您可以使用以下代码创建ECS。通过使用wait_for_serve()，您可以持续查询ECS的状态，直至ECS达到规定的状态或者查询超时为止。可以根据实际要求修改参数。在以下例子中，超时间隔默认为4分钟。
+def create_vm(conn):  
+    server = conn.compute.create_server(  
+       name='server_name', flavor_id='flavorId', image_id='imageID', key_name='keypairName',networks=[{"uuid": 'networkId'}])  
+    conn.compute.wait_for_server(server)
+表2-9 参数说明
+参数	说明	示例
+flavorId	指Flavor ID。	normal2
+imageId	指镜像的ID。	51b2c37f-f5bd-40e0-8aa2-1899a6bbca30
+keypairNam'	指秘钥对名称。	mykeypair
+
+将EIP绑定至ECS
+1.	查询ECS的端口ID。
+def get_vm_port_id(conn):  
+    ifs = list(conn.compute.server_interfaces(self.server))  
+    port_id = ifs[0].port_id
+2.	创建EIP。
+def createEIP(conn):  
+    eip = conn.network.create_ip(floating_network_id='external_network_id ',port_id='port_id')  
+    count = 1  
+    createFlag = False  
+    while(count < 10):  
+        if(conn.network.get_ip(fip.id).status == 'ACTIVE'):  
+            createFlag = True  
+            print 'eip created success'  
+            break;  
+        count = count + 1  
+        sleep(1)  
+    if(not createFlag):  
+         print 'eip create failed'
+external_network_id 是指外部网络ID。详情请参见外部网络。
+EIP可以自动绑定至上述代码中ECS端口ID所指定的ECS上。
+EIP解绑
+您可以根据以下代码，从ECS解绑EIP。
+解绑操作需要花费一定的时间，并且只有在被解绑后，EIP才可以删除。如果在解绑过程中您删除了EIP，则可能会上报错误消息。
+def disassociate_eip(conn):              
+    conn.compute.remove_floating_ip_from_server(server,  
+eip.floating_ip_address)  
+    disCount = 1  
+    removeFlag = False  
+    while(disCount < 10):  
+        if(conn.network.get_ip(eip.id).status == 'DOWN'):  
+            removeFlag = True  
+            print 'eip disassociate success'  
+            break;  
+         count = count + 1  
+         sleep(1)  
+    if(not removeFlag):  
+            print 'eip disassociate failed'
+删除ECS
+ECS删除过程可以在几秒内完成。
+def delete_server(conn):  
+    conn.compute.delete_server('serverId')  
+    conn.compute.wait_for_delete(cls.server)
+查询ECS状态
+您可以使用以下代码查询ECS的状态：
+def get_ecs(conn):  
+    print conn.compute.get_server('serverID').status
+（可选）修改ECS Flavor
+修改Flavor之后，您可以回溯修改过程或使修改生效。
+1.	修改Flavor。
+def resize_server(conn):  
+    conn.compute.resize_server(server,'resizeFlavorId')  
+    conn.compute.wait_for_server(server,"VERIFY_RESIZE")
+2.	确认修改。
+conn.compute.confirm_server_resize(server)
+3.	回溯修改。如果您已经使修改生效，则不可以实施回溯。
+conn.compute.revert_server_resize(server)
+重启ECS
+使用以下代码重启ECS：
+def reboot_server(conn):  
+    conn.compute.reboot_server(server,'rebootType')
+rebootType 的值可以设为HARD 或SOFT。
+停止ECS
+使用以下代码停止ECS：
+def stop_server(conn):  
+    conn.compute.stop_server(server)
+2.3.7 EVS Python OpenStack SDK示例
+云硬盘（EVS）是基于分布式架构而设计的可扩展虚拟块存储设备。可以在线创建云硬盘并将其挂载到ECS上。云硬盘的使用方式与物理服务器上硬盘的使用方式一样。与传统硬盘相比，云硬盘具有更高的数据可靠性和I/O吞吐能力，并且使用起来更加方便。云硬盘适用于文件系统、数据库以及需要块存储设备的系统软件和应用。
+创建卷
+您可以根据以下代码，使用Python OpenStack SDK创建一个卷。只有在该卷处于available状态时，才可以将其挂载到ECS上。
+def create_volume(conn):  
+    volume = cls.conn.block_store.create_volume(  
+        name='volume_name',  
+        size=1)  
+    conn.block_store.wait_for_status(volume,  
+                                    status='available',  
+                                    failures=['error'],  
+                                     interval=2,  
+                                     wait=120) 
+向ECS挂载卷
+您可以根据以下代码，使用Python OpenStack SDK向ECS挂载卷。当卷处于in-use状态时，说明挂载成功。
+def attach_volume_to_ecs(conn):          
+    attach_attrs = {  
+        'volume_id': attach_volume_id 
+        }  
+    attachment = conn.compute.create_volume_attachment(server,  
+**attach_attrs)  
+    conn.block_store.wait_for_status(volume,  
+                                        status='in-use',  
+                                        failures=['error'],  
+                                        interval=2,  
+                                        wait=120)    
+从ECS卸载卷
+您可以根据以下代码，将卷从ECS上卸载。卸载操作需要几秒钟的时间，并且只有当卷被卸载后，才可以将其删除。
+def attach_volume_to_ecs(conn):          
+    conn.compute.delete_volume_attachment(attachment,server)  
+    conn.block_store.wait_for_status(volume,  
+                                        status='available',  
+                                        failures=['error'],  
+                                        interval=2,  
+                                        wait=120)
+2.3.8 AS Python OpenStack SDK示例
+创建伸缩组
+伸缩组是具有相同应用场景配置的实例集合。伸缩组内定义了实例最大数量和最小数量等信息。
+可以参考以下代码创建弹性伸缩组，其中子网(Network)、安全组(Security Group)、VPC为必选参数，在创建伸缩组之前必须先创建VPC，以及同一个VPC下的子网(Network)和安全组(Security Group)。
+def test_creat_group(self): 
+_group = { 
+        "name": "as_NameTest_modify", 
+        "scaling_configuration_id": "33b55531-78f8-43c9-8cf5-ffec40bd0c6f", 
+        "desire_instance_number": 10, 
+        "min_instance_number": 2, 
+        "max_instance_number": 10, 
+        "cool_down_time": 200, 
+        "lb_listener_id": "114863c227a64255bd25157e0beb783c", 
+        "available_zones": ["eu-de-02"], 
+        "health_periodic_audit_method": "NOVA_AUDIT", 
+        "health_periodic_audit_time": "15", 
+        "instance_terminate_policy": "OLD_CONFIG_NEW_INSTANCE", 
+        "vpc_id": "2f2b426c-2072-47a7-babc-c35080fa79d4", 
+        "networks": [{                                   
+          "id": "f80308f4-2608-4ae8-9489-c87720383ae5" 
+        }], 
+        "notifications": ["EMAIL"], 
+        "delete_publicip": "true", 
+        "security_groups": [{ 
+          "id": "57f0a6cd-c427-4e40-a9a2-301ca90893fd"  
+       }] 
+      } 
+      group = self.conn.auto_scaling.create_group(**_group) 
+      group = self.conn.auto_scaling.get_group(group) 
+      logging.info(group.id)
+创建伸缩配置
+伸缩配置定义了用于创建弹性伸缩组中实例的配置。AutoScaling为某个伸缩组自动添加实例时，会根据配置创建实例。
+可以参考以下代码创建弹性伸缩组配置，当使用已存在的云服务器的规格为模板创建弹性伸缩配置时传入instance_id字段，此时flavorRef、imageRef、disk字段不生效。当不传入instance_id字段时flavorRef、imageRef、disk字段为必选。
+def test_creat_config(self): 
+    instance_config = { 
+      "flavor_id": "normal1", 
+      "image_id": "ba391176-5e4c-4c06-8466-349f6b5fc91b", 
+      "disk": [{ 
+          "size": 40, 
+          "volume_type": "SATA", 
+          "disk_type": "SYS" 
+       }], 
+      "metadata": { 
+          "key1": "value1", 
+          "tag": "app" 
+      }, 
+      "key_name": "KeyPair-0406-as", 
+      "user_data": "wewfef46565", 
+      "public_ip": { 
+          "eip": { 
+              "ip_type": "5_bgp", 
+              "bandwidth": { 
+                  "size": 10, 
+                  "share_type": "PER", 
+                  "charging_mode": "traffic" 
+              } 
+          } 
+      } 
+      } 
+      config_name = "auto-scaling-config-name" 
+      config = self.conn.auto_scaling.create_config(config_name, **instance_config) 
+      config = self.conn.auto_scaling.get_config(config) 
+      logging.info(config.id)
+创建伸缩策略
+支持三种伸缩策略类型：定时，周期，告警 ，其中周期策略还分为Daily、Weekly和Monthly三种类型，如果选择告警策略，则选择或者创建的告警只能关联一个弹性伸缩组。
+以下代码为创建每天的定时策略：
+def test_creat_policy_Daily(self): 
+    as_group_id = "196ddd9c-e1f2-4088-b150-b67ae5ebf746" 
+    as_policy_name = "as-policy-name" 
+    _policy = { 
+          "name": as_policy_name, 
+          "scaling_policy_action": { 
+              "operation": "ADD", 
+              "instance_number": 1 
+          }, 
+          "cool_down_time": 900, 
+          "scheduled_policy": { 
+              "launch_time": "16:00", 
+              "recurrence_type": "Daily", 
+              "recurrence_value": None, 
+              "start_time": "2017-07-14T03:34Z", 
+              "end_time": "2017-07-27T03:34Z" 
+          }, 
+          "type": "RECURRENCE", 
+          "scaling_group_id": as_group_id 
+    } 
+    policy = self.conn.auto_scaling.create_policy(**_policy) 
+    policy = self.conn.auto_scaling.get_policy(policy) 
+    logging.info(policy)
+2.3.9 CES Python OpenStack SDK示例
+查询指标列表
+查询系统当前可监控指标列表，可以指定指标命名空间、指标名称、维度、排序方式，起始记录和最大记录条数过滤查询结果。
+下面获取当前租户所有的指标。
+query = { 
+"namespace": "SYS.ECS", 
+"metric_name": "cpu_util", 
+"dimensions": [{ 
+"name": "instance_id", 
+"value": "d9112af5-6913-4f3b-bd0a-3f96711e004d" 
+}], 
+"order": "desc", 
+"marker": "SYS.ECS.cpu_util.instance_id:9f31d05a-76d5-478a-b864-b1b5e8708482", 
+"limit": 10 
+} 
+# get some metric 
+metrics = conn.cloud_eye.metrics(**query)
+参数	说明	示例
+namespace	指标命名空间，例如弹性云服务器命名空间。	SYS.ECS
+metric_name	指标名称。	disk_read_bytes_rate
+dim	指标的维度，目前最大支持3个维度，从0开始；维度格式为dim.{i}=key,value。	AutoScalingGroup,ca3fb7aa-da18-4abc-8206-630cbbb74e14
+start	分页起始值，格式为：namespace.metric_name.key:value。	SYS.ECS.cpu_util.instance_id:d9112af5-6913-4f3b-bd0a-3f96711e004d
+limit	取值范围(0,1000]，默认值为1000。
+用于限制结果数据条数。	50
+order	用于标识结果排序方法。	用于标识结果排序方法。
+取值说明，默认值为desc。
+asc：升序
+desc：降序
+
+查询告警列表
+查询告警规则列表，可以指定分页条件限制结果数量，可以指定排序规则。
+query = { 
+"limit": 1, 
+"marker": "last-alarm-id", 
+"order": "desc" 
+} 
+# get some alarm 
+for alarm in conn.cloud_eye.alarms(**query): 
+logging.info(alarm)
+参数	说明	示例
+start	分页起始值，内容为alarm_id	al1498535073312Z27eznaxV
+limit	取值范围(0,100]，默认值为100
+用于限制结果数据条数。	50
+order	用于标识结果排序方法。	用于标识结果排序方法。
+取值说明，默认值为desc。
+asc：升序
+desc：降序
+
+查询单条告警规则信息
+根据告警ID查询告警规则信息。
+# plain ID 
+alarm = conn.cloud_eye.get_alarm("some-alarm-id") 
+# Instance with ID 
+alarm = conn.cloud_eye.get_alarm(alarm.Alarm(id="some-alarm-id"))
+参数	说明	示例
+alarm_id	告警规则的ID。	al1498535073312Z27eznaxV
+
+启停告警规则
+启动或停止一条告警规则。
+#start alarm 
+conn.cloud_eye.enable_alarm("some-alarm-id") 
+or 
+conn.cloud_eye.enable_alarm(alarm.Alarm(id="some-alarm-id")) 
+# stop alarm 
+conn.cloud_eye.disable_alarm("some-alarm-id") 
+or 
+conn.cloud_eye.disable_alarm(alarm.Alarm(id="some-alarm-id"))
+参数	说明	示例
+alarm_id	告警规则的ID。	al1498535073312Z27eznaxV
+
+删除告警规则
+删除一条告警规则。
+conn.cloud_eye.delete_alarm("some-alarm-id") 
+or 
+conn.cloud_eye.delete_alarm(alarm.Alarm(id="some-alarm-id"))
+参数	说明	示例
+alarm_id	告警规则的ID。	al1498535073312Z27eznaxV
+
+查询监控数据
+查询指定时间范围指定指标的指定粒度的监控数据，可以通过参数指定需要查询的数据维度。
+def get_epoch_time(datetime_): 
+if datetime_: 
+seconds = time.mktime(datetime_.timetuple()) 
+return int(seconds) * 1000 
+else: 
+return None 
+now = datetime.datetime.now() 
+_to = now 
+_from = now - datetime.timedelta(minutes=5) 
+query = { 
+"namespace": "MINE.APP", 
+"metric_name": "cpu_util", 
+"from": get_epoch_time(_from), 
+"to": get_epoch_time(_to), 
+"period": 300, 
+"filter": "average", 
+"dimensions": [{ 
+"name": "instance_id", 
+"value": "33328f02-3814-422e-b688-bfdba93d4050" 
+}] 
+} 
+for aggregation in conn.cloud_eye.metric_aggregations(**query): 
+logging.info(aggregation)
+参数	说明	示例
+namespace	指标命名空间，例如弹性云服务器命名空间。	SYS.ECS
+metric_name	指标名称。	disk_read_bytes_rate
+from	查询数据起始时间，UNIX时间戳，单位毫秒。建议from的值相对于当前时间向前偏移至少1个周期。由于聚合运算的过程是将一个聚合周期范围内的数据点聚合到周期起始边界上，如果将from和to的范围设置在聚合周期内，会因为聚合未完成而造成查询数据为空，所以建议from参数相对于当前时间向前偏移至少1个周期。以5分钟聚合周期为例：假设当前时间点为10:35，10:30~10:35之间的原始数据会被聚合到10:30这个点上，所以查询5分钟数据点时from参数应为10:30或之前。
+说明
+云监控会根据所选择的聚合粒度向前取整from参数。	1499134191061l
+to	查询数据截止时间UNIX时间戳，单位毫秒。from必须小于to。	14991341892581
+period	监控数据粒度。	取值范围：
+	1，实时数据
+	300，5分钟粒度
+	1200，20分钟粒度
+	3600，1小时粒度
+	14400，4小时粒度
+	86400，1天粒度
+filter	数据聚合方式。	max, min, average, sum, variance。
+dim	指标的维度，目前最大支持3个维度，从0开始；维度格式为dim.{i}=key,value，参考弹性云服务器维度。	AutoScalingGroup,ca3fb7aa-da18-4abc-8206-630cbbb74e14
+
+添加监控数据
+添加一条或多条指标监控数据。
+def get_epoch_time(datetime_): 
+if datetime_: 
+seconds = time.mktime(datetime_.timetuple()) 
+return int(seconds) * 1000 
+else: 
+return None 
+ 
+now = datetime.datetime.now() 
+collect_time_1 = now 
+collect_time_2 = now - datetime.timedelta(minutes=5) 
+data = [ 
+{ 
+"metric": { 
+"namespace": "MINE.APP", 
+"dimensions": [ 
+{ 
+"name": "instance_id", 
+"value": "33328f02-3814-422e-b688-bfdba93d4050" 
+} 
+], 
+"metric_name": "cpu_util" 
+}, 
+"ttl": 604800, 
+"collect_time": get_epoch_time(collect_time_1), 
+"value": 60, 
+"unit": "%" 
+}, 
+{ 
+"metric": { 
+"namespace": "MINE.APP", 
+"dimensions": [ 
+{ 
+"name": "instance_id", 
+"value": "33328f02-3814-422e-b688-bfdba93d4050" 
+} 
+], 
+"metric_name": "cpu_util" 
+}, 
+"ttl": 604800, 
+"collect_time": get_epoch_time(collect_time_2), 
+"value": 70, 
+"unit": "%" 
+} 
+] 
+conn.cloud_eye.add_metric_data(data)
+参数	说明	示例
+metric	指标数据。	JSON结构
+namespace	指标命名空间，格式为service.item；service和item必须是字符串，必须以字母开头，只能包含0-9/a-z/A-Z/_，总长度最短为3，最大为32，service不能为“SYS”。	ABC.ECS
+metric_name	指标名称，必须以字母开头，只能包含0-9/a-z/A-Z/_，长度最短为1，最大为64。	disk_read_bytes_rate
+dimensions	指标维度列表。单个维度为json对象，结构说明如下
+dimension.name：必须以字母开头，只能包含0-9/a-z/A-Z/_/-，长度最短为1，最大为32。
+dimension.value：必须以字母或数字开头，只能包含0-9/a-z/A-Z/_/-，长度最短为1，最大为64。	instance_id:33328f02-3814-422e-b688-bfdba93d4050
+ttl	数据的有效期，超出该有效期则自动删除该数据，单位秒，最大值604800。	172800
+collect_time	数据收集时间
+UNIX时间戳，单位毫秒。
+说明
+因为客户端到服务器端有延时，因此插入数据的时间戳应该在[当前时间-3天+20秒，当前时间+10分钟-20秒]区间内，保证到达服务器时不会因为传输时延造成数据不能插入数据库。	1502938466458
+value	指标数据的值。	60
+unit	数据的单位。	B
+type	数据的类型，只能是"int"或"float"	int 或者 float
+
+查询配额
+查询用户可以创建的资源配额总数及当前使用量，当前仅有告警规则一种资源类型。
+quotas = conn.cloud_eye.quotas() 
+for quota in quotas: 
+logging.info(quota)
+2.3.10 DNS Python OpenStack SDK示例
+DNS Python OpenStack SDK示例
+云解析（Domain Name Service）提供高可用，高扩展的权威DNS服务和DNS管理服务，把人们常用的域名或应用资源转换成计算机用于连接的IP地址，从而将最终用户路由到相应的应用资源上。
+创建内网域名
+用户在VPC内使用云解析服务进行内网域名托管，需使用增加内网域名功能，用户可使用Python OpenStack SDK创建一个内网域名，详细操作如下：
+1.	指定需要关联的VPC。
+2.	创建内网域名。
+下面代码为内网域名创建的过程，用户可以根据需求进行相应的参数配置，创建完成后，新增的域名会在DNS服务的内网域名页面上显示。
+def setUpClass(cls):       
+    super(TestZone, cls).setUpClass()       
+    # get a router       
+    routers = cls.conn.network.routers(limit=2)       
+    idx = 0       
+    for _router in routers:           
+        idx += 1           
+        print _router           
+        if idx == 1:               
+            cls.router = _router           
+        if idx == 2:               
+            cls.router2 = _router               
+            break         
+    # create zone        
+    cls.zone = auto_create_private_zone(cls.conn, cls.NAME, cls.router.id,region)
+关联VPC
+当用户创建的内网域名需要新关联VPC时，可以利用Python OpenStack SDK在OTC上进行关联操作。 详细操作如下：
+1.	指定需要关联的VPC。
+2.	选择待关联VPC的内网域名并进行关联。
+以下代码显示了内网域名与VPC相关联的过程，用户可以根据需要修改这些配置。
+def add_router_to_zone(self): 
+    # Designate a router   
+    resource2.wait_for_status(self.conn.dns._session, self.zone, "ACTIVE", interval=5, failures=["ERROR"]) 
+    # Associate the private zone to the router   
+    result = self.conn.dns.add_router_to_zone(self.zone, **{"router_id": self.router2.id,"router_region": region})   
+    self.assertEqual(result.router_id, self.router2.id)   
+    self.assertEqual(result.router_region, region)   
+    zone = self.conn.dns.get_zone(self.zone)   
+    self.assertEqual(2, len(zone.routers))   
+    router_ids = [_router["router_id"] for _router in zone.routers]      self.assertIn(self.router.id, router_ids)
+解关联VPC
+当用户创建的内网域名不需要关联某个VPC时，可以利用Python OpenStack SDK在OTC上进行进行解关联操作。代码如下： .
+def remove_router_of_zone(self):       
+    resource2.wait_for_status(self.conn.dns._session, self.zone, "ACTIVE", interval=5, failures=["ERROR"])       
+    result = self.conn.dns.remove_router_from_zone(self.zone, **{          "router_id": self.router.id,           
+      "router_region": "eu-de"      
+    })       
+    self.assertEqual(result.router_id, self.router.id)             
+    self.assertEqual(result.router_region, "eu-de")
+删除内网域名
+当用户无需使用云解析服务托管该内网域名时，可以使用删除内网域名功能。删除内网域名后，该内网域名包含的域名将无法再被解析。
+执行删除内网域名操作前，请确认已备份该内网域名下所有用户创建的记录集。代码如下：
+def tearDownClass(cls):       
+    # delete zone       
+    cls.conn.dns.delete_zone(cls.zone)
+2.3.11 ELB Python OpenStack SDK示例
+创建Load Balancer
+下面是创建负载均衡器的方法。
+def create_load_balancer(self, **attrs):       
+    """Create a new load balancer from attributes 
+      
+    :param dict attrs: Keyword arguments which will be used to create        a :class:`~openstack.load_balancer.v1.load_balancer.LoadBalancer`, 
+        comprised of the properties on the LoadBalancer class.           :returns: a asynchronous LoadBalancer job       
+    :rtype: :class:`~openstack.load_balancer.v1.load_balancer.                          LoadBalancerJob`       
+    """ 
+    return self._create(_lb.LoadBalancerJob, prepend_key=False, **attrs)
+创建Listener
+下面是创建监听器的方法，只有当存在load balancer的前提下才能创建listener。
+def create_listener(self, **attrs): 
+    """Create a new listener from attributes 
+ 
+    :param dict attrs: Keyword arguments which will be used to create 
+        a :class:`~openstack.load_balancer.v1.listener.Listener`, 
+        comprised of the properties on the Listener class. 
+ 
+    :returns: a listener instance 
+    :rtype: :class:`~openstack.load_balancer.v1.listener.Listener` 
+    """ 
+    return self._create(_listener.Listener, prepend_key=False, **attrs)
+创建Health Check
+下面是健康检查的方法，只有当存在 listener 的前提下才能创建health check。
+def create_health_check(self, **attrs): 
+    """Create a new health check from attributes 
+ 
+    :param dict attrs: Keyword arguments which will be used to create 
+        a :class:`~openstack.load_balancer.v1.health_check.HealthCheck`, 
+        comprised of the properties on the HealthCheck class. 
+ 
+    :returns: A health check instance 
+    :rtype: `:class: ~openstack.load_balancer.v1.health_check.HealthCheck` 
+    """ 
+    return self._create(_hc.HealthCheck, prepend_key=False, **attrs)
+添加Member
+下面是向 listener 中添加member的方法。
+def add_members_to_listener(self, listener, members): 
+    """Add backend members for a listener 
+ 
+    :param listener: Either the ID of a listener or an instance of 
+            :class:`~openstack.load_balancer.v1.listener.Listener` 
+    :param members: list of dicts which contain the server_id and address. 
+        server_id is ECS service id, address is ECS server internal IP. 
+        [{"server_id": "dbecb618-2259-405f-ab17-9b68c4f541b0", 
+          "address": "172.16.0.31"}] for example. 
+ 
+    :return: a operate member job 
+    :rtype: :class:`~openstack.load_balancer.v1.listener.OperateMemberJob` 
+    """ 
+    listener = self._get_resource(_listener.Listener, listener) 
+    return listener.add_members(self._session, members)
+创建Certificate
+下面是创建证书的方法。
+def create_certificate(self, **attrs): 
+    """Create a new certificate from attributes 
+     
+    :param dict attrs: Keyword arguments which will be used to create        a :class:`~openstack.certificate.v1.certificate.Certificate`,        comprised of the properties on the Certificate class.         
+    :returns: a certificate instance       
+    :rtype: :class:`~openstack.certificate.v1.certificate.Certificate`   """ 
+    return self._create(_cert.Certificate, prepend_key=False, **attrs)
+2.3.12 VBS Python OpenStack SDK示例
+创建云硬盘备份
+下面代码为创建云硬盘备份的过程，用户可以根据需求进行相应的参数配置，创建完成后，新创建的备份会在VBS的备份列表显示。
+def create_backup(self): 
+    backup = { 
+        "volume_id": self.volume.id, 
+        "name": "sds", 
+        "description": "created by openstacksdk" 
+    } 
+ 
+    result = self.conn.volume_backup.create_backup(**backup) 
+    # assert result.job_id != None 
+    self.job_id = result.id
+请求参数说明：
+名称	是否必选	参数类型	说明
+backup	是	dict	待创建的备份。
+volume_id	是	string	需要进行备份的磁盘ID。
+snapshot_id	否	string	需要进行备份的磁盘对应的快照ID。
+name	是	string	备份名称，最大支持64个字符(不区分中英文)，只能是中文、英文、数字、下划线（_）和中划线（-）。
+description	否	string	备份描述，最大支持64个字符(不区分中英文)，且不能包含“<”和“>”。
+
+查询备份详情列表
+下面代码为查询备份列表的过程，返回每个备份的详细信息，用户可以根据需求进行相应的参数配置。
+def query_backups_detail(self): 
+    backups = self.conn.volume_backup.backups(details=True) 
+ 
+    query = { 
+        "name": "volume-backup-" + self.volume.id, 
+        # "status": "available", 
+        "volume_id": self.volume.id, 
+        # "marker": "some-backup-id", 
+        "limit": 10 
+    } 
+    backups = self.conn.volume_backup.backups(details=True, **query) 
+    for backup in backups: 
+        print backup.name
+请求参数说明：
+名称	是否必选	参数类型	说明
+name	否	string	指定查询的备份名称。用于过滤名称为指定字符串的备份。
+status	否	string	指定查询的备份状态。用于过滤特定状态的备份。可选的值目前只支持：“available”，“error”，“restoring”，“creating”，“deleting”，“error_restoring”。
+offset	否	int	指定查询信息列表的偏移量。
+limit	否	int	指定返回结果个数限制。
+volume_id	否	string	指定查询备份的磁盘ID。用于过滤指定磁盘ID对应的备份。
+
+从备份恢复磁盘
+下面代码为选择一个备份恢复到磁盘的过程，用户可以根据需求进行相应的参数配置。
+def restore_backup(self): 
+    self.query_backups() 
+    return self.conn.volume_backup.restore_backup(self.backup_id, self.volume.id)
+请求参数说明：
+名称	是否必选	参数类型	说明
+restore	是	dict	标记从备份恢复磁盘操作。
+backup_id	是	string	需要恢复的备份ID
+volume_id	是	string	将要被恢复的磁盘ID。
+
+删除备份
+下面代码为删除一个备份的过程，用户可以根据需求进行相应的参数配置。
+def delete_backup(self): 
+    self.query_backups() 
+    self.conn.volume_backup.delete_backup(self.backup_id)
+请求参数说明：
+名称	是否必选	参数类型	说明
+tenant_id	是	string	租户ID。
+backup_id	是	string	需要恢复的备份ID。
+
+创建备份策略
+下面代码为备份策略的创建过程，用户可以根据需求进行相应的参数配置。
+def create_policy(self): 
+    data = { 
+        "remain_first_backup_of_curMonth": True, 
+        "rentention_num": 10, 
+        "frequency": 1, 
+        "start_time": "12:00", 
+        "status": "ON" 
+    } 
+    volume_backup_name = "SDK-backup-test-1" 
+    policy = self.conn.volume_backup.create_backup_policy(volume_backup_name, **data) 
+    print policy 
+
+请求参数说明：
+名称	是否必选	参数类型	说明
+backup_policy_name	是	string	备份策略名称
+只能由数字、字母、汉字、下划线、中划线组成，同时不能以default开头，长度1到64位。
+scheduled_policy	是	dict	调度策略详情。
+start_time	是	string	备份开始时间，需要转化成本地时间对应的UTC时间（目前只支持整点）。
+格式为HH:mm
+frequency	否	integer	备份间隔（1-14天），该字段和week_frequency字段二选一，如果同时设置，默认以该字段为准。
+week_frequency	否	list<dict>	按指定周进行备份，取值为以下值的一个或者多个：
+SUN，MON，TUE，WED，THU，FRI，SAT
+rentention_num	否	integer	备份保留个数（最小值为2），该字段和rentention_day字段二先一，如果同时设置，默认以该字段为准。
+rentention_day	否	integer	备份保留天数。
+remain_first_backup_of_curMonth	是	string	是否保留当月的第一个备份。
+	Y	N
+status	是	string	策略状态：启用或停用。
+	ON
+	OFF
+
+删除备份策略
+下面代码为备份策略的删除过程，用户可以根据需求进行相应的参数配置。
+def delete_policy(self): 
+    policy_id = self.query_policies().id 
+    self.conn.volume_backup.delete_backup_policy(policy_id) 
+
+请求参数说明：
+名称	是否必选	参数类型	说明
+tenant_id	是	string	租户ID
+policy_id	是	string	策略ID
+
+查询备份策略
+下面代码为查询备份策略的过程，用户可以根据需求进行相应的参数配置。
+def query_policies(self): 
+    policies = list(self.conn.volume_backup.backup_policies()) 
+    if policies and len(policies) > 0: 
+        return policies[0] 
+
+2.3.13 SMN Python OpenStack SDK示例
+创建topic
+创建一个Topic，用户最多允许创建3000个Topic。接口是幂等的，如果存在同名的Topic，则返回成功，status code为200，否则status code为201。
+以下代码显示了创建topic的过程。
+def operate_topic(conn): 
+topic_dict = { 
+'name': 'labj', 
+'display_name': 'djb', 
+} 
+tp = conn.smn.create_topic(**topic_dict)
+订阅
+为指定Topic添加一个订阅者，如果订阅者的状态为未确认，则向订阅者发送一个确认的消息。待订阅者进行ConfirmSubscription确认后，该订阅者才能收到Topic发布的消息。接口是幂等的，如果添加已存在的订阅者，则返回成功，且status code为200，否则status code为201。
+以下代码显示了创建topic的过程，其中参数tp为topicUrn。
+sub_dict = { 
+'protocol': 'email', 
+'endpoint': 'xxx@xxx.com', 
+'remark': 'test', 
+} 
+sub = conn.smn.subscript_topic(tp, **sub_dict)
+消息发布
+将消息发送给Topic的所有订阅端点。当返回消息ID时，该消息已被保存并开始尝试将其推送给主题的订阅者。消息格式，取决于该主题每一个订阅者的通知协议。
+代码如下： .
+msg_dict = { 
+'message': "hello world!" 
+} 
+print("publish message") 
+conn.smn.publish_topic(tp, **msg_dict)
+2.3.14 KMS Python OpenStack SDK示例
+密钥管理服务，即KMS（Key Management Service），是一种安全、可靠、简单易用的密钥托管服务，帮助用户集中管理密钥，保护密钥安全。
+KMS通过使用硬件安全模块HSM（Hardware Security Module）保护密钥安全，帮助用户轻松创建和管理密钥，所有的用户密钥都由HSM中的根密钥保护，避免密钥泄露。KMS对密钥的所有操作都会进行访问控制及日志跟踪，提供所有密钥的使用记录，满足审计和合规性要求。
+创建用户主密钥
+您可以根据以下代码，使用Python OpenStack SDK创建一条用户主密钥。
+ def create_key(conn): 
+    key_dict = { 
+        "key_alias": "test-key-123-456789223", "realm": "123"        
+    } 
+    key = conn.kms.create_key(**key_dict) 
+启用密钥
+您可以根据以下代码，启用一条已经禁用的密钥。
+def enable_key(conn, key): 
+    # a string of key id or an object of Key 
+    print(conn.kms.enable_key(key))   
+创建数据密钥
+您可以根据以下代码，创建一条数据密钥。
+def create_data_key(conn, key):       
+    data_key_dict={ 
+    "datakey_length":"512" 
+    } 
+    print(conn.kms.create_datakey(key, **data_key_dict))
+加密数据密钥
+您可以根据以下代码，加密已创建的数据密钥。
+def encrypt_datakey(conn, key): 
+    params = { 
+        "plain_text": "fooofofoofofofofoofofoffofoofo", 
+        "datakey_plain_length": "64" 
+    } 
+    datakey = conn.kms.encrypt_datakey(key, **params) 
+    print(datakey)
+2.3.15 AntiDDoS Python OpenStack SDK示例
+查询Anti-DDoS配置可选范围
+查询系统支持的Anti-DDoS防护策略配置的可选范围，用户根据范围列表选择适合自已业务的防护策略进行Anti-DDoS流量清洗。
+认证代码示例如下：
+def list_config(conn): 
+    print("list anti-ddos confit") 
+print(conn.anti_ddos.query_config_list())
+开通Anti-DDoS服务
+用户开通Anti-DDoS流量清洗防护。作为异步接口，调用成功，只是说明服务节点收到了开通请求，开通是否成功需要通过任务查询接口查询该任务的执行状态。
+认证代码示例如下：
+def create_eip(conn): 
+    fip_dict = {'enable_L7': True, 
+                'traffic_pos_id': 1, 
+                'http_request_pos_id': 1, 
+                'cleaning_access_pos_id': 1, 
+                'app_type_id': 0} 
+ 
+    fip = conn.anti_ddos.create_floating_ip(FLOATING_IP_ID, **fip_dict) 
+print(fip)
+关闭Anti-DDoS服务
+用户关闭Anti-DDoS流量清洗防护。作为异步接口，调用成功，只是说明服务节点收到了关闭防护请求，操作是否成功需要通过任务查询接口查询该任务的执行状态。
+认证代码示例如下：
+def delete_eip(conn): 
+    fip = conn.anti_ddos.get_floating_ip(FLOATING_IP_ID) 
+    conn.anti_ddos.delete_floating_ip(fip)
+查询Anti-DDoS服务
+查询配置的Anti-DDoS防护策略，用户可以查询指定EIP的Anti-DDoS防护策略。
+认证代码示例如下：
+def get_eip(conn): 
+    fip = conn.anti_ddos.get_floating_ip(FLOATING_IP_ID) 
+    print(fip)
+更新Anti-DDoS服务
+更新指定EIP的Anti-DDoS防护策略配置。调用成功，只是说明服务节点收到了关闭更新配置请求，操作是否成功需要通过任务查询接口查询该任务的执行状态。
+认证代码示例如下：
+def update_eip(conn): 
+    fip = conn.anti_ddos.get_floating_ip(FLOATING_IP_ID) 
+ 
+    fip_update_dict = {'enable_L7': False, 
+                       'traffic_pos_id': 1, 
+                       'http_request_pos_id': 1, 
+                       'cleaning_access_pos_id': 1, 
+                       'app_type_id': 0} 
+    ufip = conn.anti_ddos.update_floating_ip(fip, **fip_update_dict) 
+    print(ufip)
+查询Anti-DDoS任务
+用户查询指定的Anti-DDoS防护配置任务，得到任务当前执行的状态。
+认证代码示例如下：
+def query_task_status(conn): 
+    print(conn.anti_ddos.query_task_status( 
+        '228186d4-4aec-4c37-bae8-cb025aaf5770'))
+查询EIP防护状态列表
+查询用户所有EIP的Anti-DDoS防护状态信息，用户的EIP无论是否绑定到云服务器，都可以进行查询。
+认证代码示例如下：
+def list_eips(conn): 
+    print("list eips by status") 
+    print(conn.anti_ddos.floating_ips())
+查询指定EIP防护状态
+查询指定EIP的Anti-DDoS防护状态。
+认证代码示例如下：
+def get_eip_status(conn): 
+    print(conn.anti_ddos.get_eip_status(FLOATING_IP_ID))
+查询指定EIP防护流量
+查询指定EIP在过去24小时之内的防护流量信息，流量的间隔时间单位为5分钟。
+认证代码示例如下：
+def get_eip_daily(conn): 
+    for d in conn.anti_ddos.list_eip_daily(FLOATING_IP_ID): 
+        print(d)
+查询指定EIP异常事件
+查询指定EIP在过去24小时之内的异常事件信息，异常事件包括清洗事件和黑洞事件，查询延迟在5分钟之内。
+认证代码示例如下：
+def get_eip_log(conn): 
+    for l in conn.anti_ddos.list_eip_log(FLOATING_IP_ID): 
+        print(l)
+查询周防护统计情况
+查询用户所有Anti-DDoS防护周统计情况，包括一周内DDoS拦截次数和攻击次数、以及按照被攻击次数进行的排名信息等统计数据。
+认证代码示例如下：
+def get_eip_weekly(conn): 
+    print(conn.anti_ddos.get_eip_weekly('1006510306'))
+查询告警配置信息
+查询用户配置信息，用户可以通过此接口查询是否接收某类告警，同时可以配置是手机短信还是电子邮件接收告警信息。
+认证代码示例如下：
+def get_alert_config(conn): 
+    print(conn.anti_ddos.get_alert_config())
+2.3.16 DMS Python OpenStack SDK示例
+分布式消息服务（Distributed Message Service）是一项基于高可用分布式集群技术的消息中间件服务，具有大规模、高可靠、高并发访问、可扩展且完全托管的特点。DMS帮助云端的应用程序组件去耦合，具有很高的成本效益。
+创建队列
+下面代码为消息队列创建的过程，创建成功后，可在此队列上生产消息，示例：
+queue_dict = { 
+                'name': "dmsTestQueue" + self.timeStamp, 
+                'description': "dmsTestQueue" + self.timeStamp 
+} 
+q = conn.dms.create_queue(**queue_dict)
+创建消费组
+下面代码为消费组创建的过程，创建完成后，新创建的消费组，可消费队列上的消息，示例：
+groupDict = { 
+            "groups": [ 
+                { 
+                    "name": "dmsConsumeGroup" + self.timeStamp 
+                } 
+            ] 
+ } 
+group = conn.dms.create_groups(queue, **groupDict)
+生产消息
+下面代码为生产消息的过程，示例：
+msgDict = { 
+            "messages": [ 
+                { 
+                    "body": "testMsg" + self.timeStamp, 
+                    "attributes": 
+                    { 
+                        "attribute1": "value1", 
+                        "attribute2": "value2" 
+                    } 
+                } 
+            ] 
+ } 
+conn.dms.send_messages(queue, **msgDict))
+消费消息
+下面代码为消费消息的过程，示例：
+msgList =  conn.dms.consume_message(queue, group[0].id)
+ 
+3 常见问题
+3.1  如何在控制台上创建秘钥对?
+3.2  如何创建安全组?
+3.3  如何获取domain_name、project_name和project_id ?
+3.1 如何在控制台上创建秘钥对?
+单击Create SSH Key Pair，创建秘钥对myOpenStackKey。点击OK，将myOpenStackKey.pem文件保存在本地PC。
+ 
+3.2 如何创建安全组?
+1.	选择安全组 > 创建安全组。
+ 
+2.	点击添加规则。在弹出的对话框中，添加规则。
+ 
+3.3 如何获取domain_name、project_name和project_id ?
+前提条件
+已经登录控制台。
+步骤
+步骤 1	点击右上角的用户名，从下拉菜单中选择My Credential。
+步骤 2	在My Credential页面，获取用户名、domain_name和project_id。
+ 
+----结束
+ 
+A API & SDK 对应关系
+A.1 JAVA
+A.1.1 IAM
+Interface	Method	API
+ProjectService	List<? extends Project> list()	GET /v3/projects
+ServiceEndpointService	List<? extends Service> list()	GET /v3/services
+	List<? extends Endpoint> listEndpoints()	GET /v3/endpoints
+TokenService	Token get(String tokenId)	GET /v3/auth/tokens
+UserService	User create(String domainId, String name, String password, String email, boolean enabled)	POST /v3/users
+	User create(User user)	POST /v3/users
+	ActionResponse delete(String userId)	DELETE /v3/users/{user_id}
+	User get(String userId)	GET /v3/users/{user_id}
+	List<? extends User> getByName(String userName)	GET /v3/users?name={user_name}
+	User getByName(String userName, String domainId)	GET /v3/users?name={user_name}&&domain_id={domain_id}
+	List<? extends User> list()	GET /v3/users
+	List<? extends Group> listUserGroups(String userId)	GET /v3/users/{user_id}/groups
+	List<? extends Project> listUserProjects(String userId)	GET /v3/users/{user_id}/projects
+	User update(User user)	PATCH /v3/users/{user_id}
+
+A.1.2 IMS
+Interface	Method	API
+ImageService	Image create(Image image)	POST /v2/images
+	ActionResponse upload(String imageID,Payload payload,Image image)	PUT /v2/images/{image_id}/file
+	ActionResponse Delete(String imageID)	DELETE /v2/images/{image_id}
+	List<? extends Image> list()	GET /v2/images
+	Image get(String imageID)	GET /v2/images/{image_id}
+	ActionResponse updateTag(String tagkey,String tagvalue)	PUT /v2/images/{image_id}/tags/{tag}
+	ActionResponse deleteTag(String tagkey,String tagvalue)	DELETE /v2/images/{image_id}/tags/{tag}
+	List<? extends Member> listMembers(String imageid)	GET /v2/images/{image_id}/members
+	Member getMember(String imageID,"memberid")	GET /v2/images/{image_id}/members/{member_id}
+	ActionResponse deleteMember(String imageId,String memberID)	DELETE
+/v2/images/{image_id}/members/{member_id}
+	Member updateMember(String imageid, String memberid, Member.MemberStatus.ACCEPTED));	PUT /v2/images/{image_id}/members/{member_id}
+
+A.1.3 VPC
+Interface	Method	API
+NetFloatingIPService	NetFloatingIP associateToPort(String id, String portId)	PUT /v2.0/floatingips/{floatingip-id}
+	NetFloatingIP create(NetFloatingIP floatingIp)	POST /v2.0/floatingips
+	ActionResponse delete(String id)	DELETE /v2.0/floatingips/{floatingip-id}
+	NetFloatingIP disassociateFromPort(String id)	PUT /v2.0/floatingips/{floatingip-id}
+	NetFloatingIP get(String id)	GET /v2.0/floatingips/{floatingip-id}
+	List<? extends NetFloatingIP> list()	GET /v2.0/floatingips
+	List<? extends NetFloatingIP> list(Map<String,String> filteringParams)	GET /v2.0/floatingips
+NetworkService	Network create(Network network)	post /v2.0/networks
+	ActionResponse delete(String networkId)	DELETE /v2.0/networks/{network_id}
+	Network get(String networkId)	GET /v2.0/networks/{network_id}
+	List<? extends Network> list()	GET /v2.0/networks
+	Network update(String networkId, NetworkUpdate network)	PUT /v2.0/networks/{network_id}
+PortService	Port create(Port port)	POST /v2.0/ports
+	ActionResponse delete(String portId)	DELETE /v2.0/ports/{port_id}
+	Port get(String portId)	GET /v2.0/ports/{port_id}
+	List<? extends Port> list()	GET /v2.0/ports
+	List<? extends Port> list(PortListOptions options)	GET /v2.0/ports?network_id={network_id}
+	Port update(Port port)	PUT /v2.0/ports/{port_id}
+RouterService	RouterInterface attachInterface(String routerId, AttachInterfaceType type, String portOrSubnetId)	PUT /v2.0/routers/{router_id}/add_router_interface
+	Router create(Router router)	POST /v2.0/routers
+	Router create(String name, boolean adminStateUp)	POST /v2.0/routers
+	ActionResponse delete(String routerId)	DELETE /v2.0/routers/{router_id}
+	RouterInterface detachInterface(String routerId, String subnetId, String portId)	PUT /v2.0/routers/{router_id}/remove_router_interface
+	Router get(String routerId)	GET /v2.0/routers/{router_id}
+	List<? extends Router> list()	GET /v2.0/routers
+	Router toggleAdminStateUp(String routerId, boolean adminStateUp)	PUT /v2.0/routers/{router_id}
+	Router update(Router router)	PUT /v2.0/routers/{router_id}
+SecurityGroupRuleService	SecurityGroupRule create(SecurityGroupRule rule)	POST /v2.0/security-group-rules
+	void delete(String id)	DELETE /v2.0/security-group-rules/{security-group-rules-id}
+	SecurityGroupRule get(String id)	GET /v2.0/security-group-rules/{security-group-rules-id}
+	List<? extends SecurityGroupRule> list()	GET /v2.0/security-group-rules
+SecurityGroupService	SecurityGroup create(SecurityGroup securityGroup)	POST /v2.0/security-groups
+	ActionResponse delete(String id)	DELETE /v2.0/security-groups/{security-group-id}
+	SecurityGroup get(String id)	GET /v2.0/security-groups/{security-group-id}
+	List<? extends SecurityGroup> list()	GET /v2.0/security-groups
+SubnetService	Subnet create(Subnet subnet)	POST /v2.0/subnets
+	ActionResponse delete(String subnetId)	DELETE /v2.0/subnets/{subnet_id}
+	Subnet get(String subnetId)	GET /v2.0/subnets/{subnet_id}
+	List<? extends Subnet> list()	GET /v2.0/subnets
+	Subnet update(String subnetId, Subnet subnet)	PUT /v2.0/subnets/{subnet_id}
+	Subnet update(Subnet subnet)	PUT /v2.0/subnets/{subnet_id}
+
+A.1.4 ECS
+Interface	Method	API
+ComputeFloatingIPService	ActionResponse addFloatingIP(Server server,  String ipAddress)	POST /servers/{server_id}/action Add FloatingIp
+	ActionResponse addFloatingIP(Server server, String fixedIpAddress, String ipAddress)	POST /servers/{server_id}/action Add FloatingIp
+	FloatingIP allocateIP(String pool)	POST /os-floating-ips
+	ActionResponse deallocateIP(String id)	DELETE /os-floating-ips/{floating_ip_id}
+	List<? extends FloatingIP> list()	GET /os-floating-ips
+	ActionResponse removeFloatingIP(Server server, String ipAddress)	POST /servers/{server_id}/action Remvoe FloatingIp
+ComputeImageService	ActionResponse delete(String imageId)	DELETE /images/{image_id}
+	Image get(String imageId)	GET /images/{image_id}
+	List<? extends Image> list()	GET /images/detail
+	List<? extends Image> list(boolean detailed)	GET /images
+ComputeSecurityGroupService	SecGroupExtension create(String name,  String description)	POST /os-security-groups
+	SecGroupExtension.Rule createRule(SecGroupExtension.Rule rule)	POST /os-security-group-rules
+	ActionResponse delete(String securityGroupId)	DELETE  /os-security-groups/{security_group}
+	ActionResponse deleteRule(String ruleId)	DELETE  /os-security-group-rules/{security_group_rule_id}
+	SecGroupExtension get(String securityGroupId)	GET  /os-security-groups/{security_group_id}
+	List<? extends SecGroupExtension>  list()	GET /os-security-groups
+FlavorService	Flavor get(String flavorId)	GET /flavors/{flavor_id}
+	List<? extends Flavor> list()	GET /flavors/detail?is_public=None
+KeypairService	Keypair create(String name, String publicKey)	POST /os-keypairs
+	ActionResponse delete(String name)	DELETE  /os-keypairs/test-keypair-openstack4j
+	Keypair get(String name)	GET /os-keypairs/{keypair_name}
+	List<? extends Keypair> list()	GET /os-keypairs
+QuotaSetService	QuotaSet get(String tenantId)	GET /os-quota-sets/{tenant_id}
+	Limits limits()	GET /limits
+ServerGroupService	ServerGroup create(String name, String policy)	POST /os-server-groups
+	ActionResponse delete(String id)	DELETE  /os-server-groups/{{server_group_id}}
+	ServerGroup get(String id)	GET /os-server-groups/{server_group_id}
+	List<? extends ServerGroup> list()	GET /os-server-groups
+ServerService	ActionResponse action(String serverId,  Action action)
+Executes the specified Action such as RESUME, PAUSE, START, STOP …	POST /servers/{server_id}/action
+start server action
+stop server action
+lock server action
+unlock server action
+	VolumeAttachment attachVolume(String serverId, String volumeId, String device)	POST  /servers/{server_id}/os-volume_attachments
+	Server boot(ServerCreate server)	POST /servers
+	Server bootAndWaitActive(ServerCreate server, int maxWaitTime)	POST /servers
+GET /servers/{server_id}
+	ActionResponse confirmResize(String serverId)	POST /servers/{server_id}/action
+resize server action
+	String createSnapshot(String serverId,  String snapshotName)	POST
+/servers/{server_id}/action
+Create Image (createImage Action)
+	ActionResponse delete(String serverId)	DELETE /servers/{server_id}
+	ActionResponse deleteMetadataItem(String serverId, String key)	DELETE /servers/{server_id}/metadata/{key}
+	ActionResponse detachVolume(String serverId, String attachmentId)	DELETE  /servers/{server_id}/os-volume_attachments/{attachment_id}
+	Server get(String serverId)	GET /servers/{server_id}
+	Map<String,String>  getMetadata(String serverId)	GET /servers/{server_id}/metadata
+	List<? extends Server> list()	GET /servers/detail
+	List<? extends Server> list(boolean detail)	GET /servers
+	List<? extends Server>  list(Map<String,String> filteringParams)	GET  /servers/detail{?changes-since,image,flavor,name,status,host,limit,marker}
+	ActionResponse reboot(String serverId,  RebootType type)	POST /servers/{server_id}/action
+reboot server action
+	ActionResponse rebuild(String serverId,  RebuildOptions options)	POST /servers/{server_id}/action
+rebuid server action
+	ActionResponse resize(String serverId,  String flavorId)	POST /servers/{server_id}/action
+resize server action
+	ActionResponse revertResize(String serverId)	POST /servers/{server_id}/action
+revert server action
+resize server action
+	Server update(String serverId,  ServerUpdateOptions options)	PUT /servers/{server_id}
+	Map<String,String> updateMetadata(String serverId, Map<String,String> metadata)	PUT /servers/{server_id}/metadata
+	Server waitForServerStatus(String serverId, Server.Status status, int maxWait, TimeUnit maxWaitUnit)	GET /servers/{server_id}
+InterfaceService (ext)	InterfaceAttachment create(String serverId, String portId)	POST /servers/{server_id}/os-interface
+	ActionResponse detach(String serverId,  String attachmentId)	DELETE /servers/{server_id}/os-interface/{port_id}
+	InterfaceAttachment get(String serverId,  String attachmentId)	GET /servers/{server_id}/os-interface/{port_id}
+	List<? extends InterfaceAttachment>  list(String serverId)	GET /servers/{server_id}/os-interface
+ZoneService(ext)	List<? extends AvailabilityZone>  list()	GET /os-availability-zone
+
+A.1.5 EVS
+Interface	Method	API
+BlockVolumeServiceS	Volume create(Volume volume)	POST /v2/{tenant_id}/volumes
+	ActionResponse delete(String volumeId)	DELETE /v2/{tenant_id}/volumes/{volume_id}
+	ActionResponse extend(String volumeId, Integer newSize)	POST /v2/{tenant_id}/volumes/{volume_id}/action extends volume size
+	Volume get(String volumeId)	GET /v2/{tenant_id}/volumes/{volume_id}
+	List<? extends Volume> list()	GET /v2/{tenant_id}/volumes/detail
+	List<? extends Volume> list(Map<String,String> filteringParams)	GET /v2/{tenant_id}/volumes/detail?limit={limit_nmuber}
+GET /v2/{tenant_id}/volumes/detail?marker={volume_id}
+	ActionResponse update(String volumeId, String name, String description)	PUT /v2/{tenant_id}/volumes/{volume_id}
+BlockVolumeSnapshotService	ActionResponse delete(String snapshotId)	DELETE /v2/{tenant_id}/snapshots/{snapshot_id}
+	VolumeSnapshot get(String snapshotId)	GET /v2/{tenant_id}/snapshots/{snapshot_id}
+	List<? extends VolumeSnapshot> list()	GET /v2/{tenant_id}/snapshots
+	List<? extends VolumeSnapshot> list(Map<String,String> filteringParams)	GET /v2/{tenant_id}/snapshots?volume_id={volume_id}
+CinderZoneService	List<? extends AvailabilityZone> list()	GET /v2/{tenant_id}/os-availability-zone
+
+A.1.6 AS
+Interface	Method	API
+Group	osclient.autoScaling().groups().create(group)	POST  /autoscaling-api/v1/{tenant_id}/scaling_group
+	osclient.autoScaling().groups().list()	GET /autoscaling-api/v1/{tenant_id}/scaling_group
+	osclient.autoScaling().groups().get("groupId")	GET  /autoscaling-api/v1/{tenant_id}/scaling_group/{scaling_group_id}
+	osclient.autoScaling().groups().update(group.groupId(),  update)	PUT  /autoscaling-api/v1/{tenant_id}/scaling_group/{scaling_group_id}
+	osclient.autoScaling().groups().delete("groupId")	DELETE  /autoscaling-api/v1/{tenant_id}/scaling_group/{scaling_group_id}
+	osclient.autoScaling().groups().resume("groupId")	POST  /autoscaling-api/v1/{tenant_id}/scaling_group/{scaling_group_id}/action
+	osclient.autoScaling().groups().pause("groupId")	POST  /autoscaling-api/v1/{tenant_id}/scaling_group/{scaling_group_id}/action
+config	osv3().autoScaling().configs().create(config)	POST  /autoscaling-api/v1/{tenant_id}/scaling_configuration
+	osv3().autoScaling().configs().list()	GET  /autoscaling-api/v1/{tenant_id}/scaling_configuration
+	osv3().autoScaling().configs().get("configId")	GET  /autoscaling-api/v1/{tenant_id}/scaling_configuration/{scaling_configuration_id}
+	osv3().autoScaling().configs().delete("configId")	DELETE /autoscaling-api/v1/{tenant_id}/scaling_configuration/{scaling_configuration_id}
+	osv3().autoScaling().configs().delete(Lists.newArrayList("configId"))	POST  /autoscaling-api/v1/{tenant_id}/scaling_configurations
+Instance	osclient.autoScaling() .groupInstances().list("groupId", options)	DELETE /autoscaling-api/v1/{tenant_id}/scaling_group_instance/{instance_id}
+	osclient.autoScaling().groupInstances().delete("instanceId", false)	POST  /autoscaling-api/v1/{tenant_id}/scaling_group_instance/{scaling_group_id}/action
+	osclient.autoScaling().groupInstances() .batchOperate("groupId", instanceIds , false, Action.ADD)	POST /autoscaling-api/v1/{tenant_id}/scaling_group_instance/{scaling_group_id}/action
+	osclient.autoScaling().groupInstances() .batchOperate("groupId", instanceIds , false, Action.DELETE)	POST  /autoscaling-api/v1/{tenant_id}/scaling_policy
+Policy	osclient.autoScaling().policies().create(policy)	POST /autoscaling-api/v1/{tenant_id}/scaling_policy
+	osclient.autoScaling().policies().update(policy)	PUT  /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_policy_id}
+	osclient.autoScaling().policies().list("groupId")	GET  /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_group_id}/list
+	osclient.autoScaling().policies().get("policyId")	GET  /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_policy_id}
+	osclient.autoScaling().policies().execute("policyId")	POST  /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_policy_id}/action
+	osclient.autoScaling().policies().resume("policyId")	POST /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_policy_id}/action
+	osclient.autoScaling().policies().pause("policyId")	POST  /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_policy_id}/action
+	osclient.autoScaling().policies().delete("policyId")	DELETE /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_policy_id}
+Activity	osclient.autoScaling().activityLogs().list("groupId", options)	GET  /autoscaling-api/v1/{tenant_id}/scaling_activity_log/{scaling_group_id}
+Quota	osclient.autoScaling().quotas().list()	GET  /autoscaling-api/v1/{tenant_id}/quotas
+	osclient.autoScaling().quotas().list("groupId")	GET  /autoscaling-api/v1/{tenant_id}/quotas/{scaling_group_id}
+
+A.1.7 CES
+Interface	Method	API
+MetricService	List<? extends Metric> getList(MetricFilterOptions options);	GET /V1.0/{project_id}/metrics
+AlarmService	List<? extends Alarm> list(AlarmFilterOptions options);	GET /V1.0/{project_id}/alarms
+	List<? extends Alarm> get(String alarmId);	GET /V1.0/{project_id}/alarms/{alarm_id}
+	ActionResponse startAlarm(String alarmId)	PUT /V1.0/{project_id}/alarms/{alarm_id}/action
+	ActionResponse deleteAlarm(String alarmId);	DELETE /V1.0/{project_id}/alarms/{alarm_id}
+MetricDataService	MetricAggregation get(String namespace, String metric_name, Date from, Date to, Period period, Filter filter, String[] dimValues);	GET /V1.0/{project_id}/metric-data
+	ActionResponse add(List<? extends MetricData> metrics);	POST /V1.0/{project_id}/metric-data
+QuotaService	CloudEyeQuota get();	GET /V1.0/{project_id}/quotas
+
+A.1.8 DNS
+Interface	Method	API
+Zone	osclient.dns().zones().create(zone)	POST /v2/zones
+	osclient.dns().zones().get("zone-id")	GET /v2/zones/{zone_id}
+	osclient.dns().zones().list()	GET /v2/zones
+	osclient.dns().zones().delete(zone_id)	DELETE /v2/zones/{zone_id}
+	osclient.dns().zones().listNameservers(zone_id)	GET /v2/zones/{zone_id}/nameservers
+	osclient.dns().zones().associateRouter(zone_id, router)	POST /v2/zones/{zone_id}/associaterouter
+	osclient.dns().zones().disassociateRouter(zone_id, router)	POST /v2/zones/{zone_id}/disassociaterouter
+Recordset	osclient.dns().recordsets().create(ZONE_ID, recordset)	POST /v2/zones/{zone_id}/recordsets
+	osclient.dns().recordsets().get(zone_id, recordset_id)	GET /v2/zone/{zone_id}/recordsets/{recordset_id}
+	osclient.dns().recordsets().list()	GET /v2/recordsets
+	osclient.dns().recordsets().list(zone_id)	GET /v2/zones/{zone_id}/recordsets
+	osclient.dns().recordsets().delete(zone_id, recordset_id)	DELETE  /v2/zones/{zone_id}/recordsets/{recordset_id}
+PTR Record	osclient.dns().ptrs().setup(ptrRecord)	PATCH  /v2/reverse/floatingips/{region}:{floatingip_id}
+	osclient.dns().ptrs().restore(region, floatingIpId)	PATCH  /v2/reverse/floatingips/{region}:{floatingip_id}
+	osclient.dns().ptrs().list()	GET /v2/reverse/floatingips
+	osclient.dns().ptrs().get(region, floatingIpId)	GET /v2/reverse/floatingips/{region}:{floatingip_id}
+
+A.1.9 ELB
+Interface	Method	API
+LoadBalancer	ELBJob create(LoadBalancerCreate loadBalancer)	POST /v1.0/{tenant_id}/elbaas/loadbalancers
+	LoadBalancer get(String loadBalancerId)	GET /v1.0/{tenant_id}/elbaas/loadbalancers/{loadbalancer_id}
+	List<? extends LoadBalancer> list()	GET /v1.0/{tenant_id}/elbaas/loadbalancers
+	ELBJob update(String loadBalancerId, LoadBalancerUpdate loadBalancer)	PUT /v1.0/{tenant_id}/elbaas/loadbalancers/{loadbalancer_id}
+	ELBJob delete(String loadBalancerId)	DELETE /v1.0/{tenant_id}/elbaas/loadbalancers/{loadbalancer_id}
+Listener	ListenerCreate create(ListenerCreate listener)	POST /v1.0/{tenant_id}/elbaas/listeners
+	Listener get(String listenerId)	GET /v1.0/{tenant_id}/elbaas/listeners/{listener_id}
+	Listener[] list()	GET /v1.0/{tenant_id}/elbaas/listeners?loadbalancer_id={loadbalancer_id}
+	Listener update(String listenerId, ListenerUpdate listener)	PUT /v1.0/{tenant_id}/elbaas/listeners/{listener_id}
+	ActionResponse delete(String listenerId)	DELETE /v1.0/{tenant_id}/elbaas/listeners/{listener_id}
+HealthCheck	HealthCheck create(HealthCheckCreate healthCheck)	POST /v1.0/{tenant_id}/elbaas/healthcheck
+	HealthCheck get(String healthCheckId)	GET /v1.0/{tenant_id}/elbaas/healthcheck/{healthcheck_id}
+	HealthCheck update(String healthCheckId, HealthCheckUpdate healthCheck)	PUT /v1.0/{tenant_id}/elbaas/healthcheck/{healthcheck_id}
+	ActionResponse delete(String healthCheckId)	DELETE /v1.0/{tenant_id}/elbaas/healthcheck/{healthcheck_id}
+Member	ELBJob create(String listenerId, List<ServerCreate> servers)	POST /v1.0/{tenant_id}/elbaas/listeners/{listener_id}/members
+	ELBJob delete(String listenerId, ServerDelete serverDelete)	POST /v1.0/{tenant_id}/elbaas/listeners/{listener_id}/members/action
+	Server[] list(String listenerId)	GET /v1.0/{tenant_id}/elbaas/listeners/{listener_id}/members
+Certificate	Certificate create(Certificate cert)	POST /v1.0/{tenant_id}/elbaas/certificate
+	Certificates list()	GET /v1.0/{tenant_id}/elbaas/certificate
+	Certificate update(String certificateId, CertificateUpdate cert)	PUT /v1.0/{tenant_id}/elbaas/certificate/{certificate_id}
+	ActionResponse delete(String certificateId)	DELETE /v1.0/{tenant_id}/elbaas/certificate/{certificate_id}
+
+A.1.10 VBS
+Interface	Method	API
+VolumeBackup	osclient.blockStorage().asyncBackups().create(volumeBackup)	POST /v2/{tenant_id}/cloudbackups
+	osclient.blockStorage().backups().create(volumeBackup)	Post /v2/{project_id}/backups
+	osclient.blockStorage().asyncBackups().restore()	POST/v2/{tenant_id}/cloudbackups/{backup_id}/restore
+	osclient.blockStorage().backups().list(false, filter)	GET /v2/{tenant_id}/backups
+	osclient.blockStorage().backups().list(true, filter)	GET /v2/{tenant_id}/backups/detail
+	osclient.blockStorage().backups().get("volume-backup-id")	GET /v2/{tenant_id}/backups/{backup_id}
+	osclient.blockStorage().backups().delete("volume-backup-id");	DELETE /v2/{tenant_id}/backups/{backup_id}
+	osclient.blockStorage().jobs().get("job-id")	GET /v1/{tenant_id}/jobs/{job_id}
+VolumeBackupPolicy	osclient.blockStorage().policies().create(create)	POST /v2/{tenant_id}/backuppolicy
+	osclient.blockStorage().policies().list()	GET /v2/{tenant_id}/backuppolicy
+	osclient.blockStorage().policies().update(policy)	PUT /v2/{tenant_id}/backuppolicy/{policy_id}
+	osclient.blockStorage().policies().delete("policy-id")	DELETE /v2/{tenant_id}/backuppolicy/{policy_id}
+	osclient.blockStorage().policies().linkResources("policy-id", resources);	POST /v2/{tenant_id}/backuppolicyresources
+	osclient.blockStorage().policies().unlinkResources("policy-id", resources)	POST /v2/{tenant_id}/backuppolicyresources/{policy_id}/deleted_resources
+	osclient.blockStorage().policies().execute("policy-id")	POST /v2/{tenant_id}/backuppolicy/{policy_id}/action
+	osclient.blockStorage().policies().tasks("policy-id", options)	GET /v2/{tenant_id}/backuppolicy/{policy_id}/backuptasks
+	osclient.blockStorage().policies().enable("policy-id")	PUT /v2/{tenant_id}/backuppolicy/{policy_id}
+	osclient.blockStorage().policies().disable("policy-id")	PUT /v2/{tenant_id}/backuppolicy/{policy_id}
+
+A.1.11 SMN
+Interface	method	API URL
+Topic	osclient.notification().topics().create("topic-name", "display-name")	POST /v2/{project_id}/notifications/topics
+	osclient.notification().topics().updateDisplayName(topicUrn, displayName)	PUT /v2/{project_id}/notifications/topics/{topic_urn}
+	osclient.notification().topics().delete(topicUrn)	DELETE /v2/{project_id}/notifications/topics/{topic_urn}
+	osclient.notification().topics().list(100, 0)	GET /v2/{project_id}/notifications/topics?offset=0&limit=2
+	osclient.notification().topics().get(topicUrn)	GET /v2/{project_id}/notifications/topics/{topic_urn}
+	osclient.notification().topics().getTopicAttributes(topicUrn)	GET /v2/{project_id}/notifications/topics/{topic_urn}/attributes?name=access_policy
+	osclient.notification().topics().getTopicAttribute(topicUrn, TopicAttributeName.Introduction)	/v2/{project_id}/notifications/topics/{topic_urn}/attributes?name=access_policy
+	osclient.notification().topics().updateTopicAttribute(topicUrn, TopicAttributeName.Introduction, "sdk-unittest")	PUT /v2/{project_id}/notifications/topics/{topic_urn}/attributes/{attributes_name}
+	osclient.notification().topics() .deleteTopicAttribute(topicUrn, TopicAttributeName.Introduction);	DELETE /v2/{project_id}/notifications/topics/{topic_urn}/attributes/{attributes_name}
+	osclient.notification().topics().deleteTopicAttributes(topicUrn)	DELETE /v2/{project_id}/notifications/topics/{topic_urn}/attributes
+Subscribe	osclient.notification().subscriptions().list(100, 0)	GET /v2/{project_id}/notifications/subscriptions?offset=0&limit=2
+	osclient.notification().subscriptions().listByTopic("topic-urn", 100, 0)	GET /v2/{project_id}/notifications/topics/{topic_urn}/subscriptions?offset=0&limit=10
+	osclient.notification().subscriptions().subscribe(subscribe)	POST /v2/{project_id}/notifications/topics/{topic_urn}/subscriptions
+	osclient.notification().subscriptions().unsubscribe("subscription-urn")	DELETE /v2/{project_id}/notifications/subscriptions/{subscription_urn}
+Message template	osclient.notification().messageTemplates().create(create)	POST /v2/{project_id}/notifications/message_template
+	osclient.notification().messageTemplates().updateContent("message-template-id", "Hello, {user}")	PUT /v2/{project_id}/notifications/message_template/{message_template_Id}
+	osclient.notification().messageTemplates().delete("message-template-id")	DELETE /v2/{project_id}/notifications/message_template/{message_template_id}
+	osclient.notification().messageTemplates().list(options);	GET /v2/{project_id}/notifications/message_template
+	osclient.notification().messageTemplates().get("message-template-id")	GET /v2/{project_id}/notifications/message_template/{message_template_id}
+Message	osclient.notification().messages().publish("topic-urn", "subject", "message-content")	POST /v2/{project_id}/notifications/topics/{topic_urn}/publish
+	osclient.notification().messages().publish("topic-urn", structuredMessage)	POST /v2/{project_id}/notifications/topics/{topic_urn}/publish
+	osclient.notification().messages().publish("topic-urn", templatedMessage)	POST /v2/{project_id}/notifications/topics/{topic_urn}/publish
+SMS	osclient.notification().sms().send("15659767757", "Hello, sms", null)	POST /v2/{project_id}/notifications/sms
+
+A.1.12 AntiDDoS
+Interface	Method	API
+	osclient.antiDDoS().antiddos().listConfigs()	GET /v1/{project_id}/antiddos/query_config_list
+EIP	osclient.antiDDoS().antiddos().create(entity, "floatingIpId")	POST /v1/{project_id}/antiddos/{floating_ip_id}
+	osclient.antiDDoS().antiddos().delete("floatingIpId")	DELETE /v1/{project_id}/antiddos/{floating_ip_id}
+	osclient.antiDDoS().antiddos().get("floatingIpId")	GET /v1/{project_id}/antiddos/{floating_ip_id}
+	osclient.antiDDoS().antiddos().update(entity, "floatingIpId")	PUT /v1/{project_id}/antiddos/{floating_ip_id}
+	osclient.antiDDoS().antiddos().getTask("taskId")	GET /v1/{project_id}/query_task_status
+	osclient.antiDDoS().antiddos().listStatus(options)	GET /v1/{project_id}/antiddos
+	osclient.antiDDoS().antiddos().getStatus("floatingIpId")	GET /v1/{project_id}/antiddos/{floating_ip_id}/status
+	osclient.antiDDoS().antiddos().dailyReport("floatingIpId")	GET /v1/{project_id}/antiddos/{floating_ip_id}/daily
+	osclient.antiDDoS().antiddos().listLogs("floatingIpId", options)	GET /v1/{project_id}/antiddos/{floating_ip_id}/logs
+	osclient.antiDDoS().antiddos().weeklyReport(date)	GET /v1/{project_id}/antiddos/ weekly
+	osclient.antiDDoS().warnalert().query()	GET /v2/{project_id}/ warnalert/alertconfig/query
+
+A.1.13 DMS
+Interface	method	API
+Queue	osclient.messageQueue().queue()   .create("queue-name",  "queue-display-name")	POST   /v1.0/{project_id}/queues
+	osclient.messageQueue().queue().list()	GET  /v1.0/{project_id}/queues
+	osclient.messageQueue().queue().get("queue-id")	GET  /v1.0/{project_id}/queues/{queue_id}
+	osclient.messageQueue().queue().delete("queue-id")	DELETE  /v1.0/{project_id}/queues/{queue_id}
+Consumer Group	osclient.messageQueue().consumerGroups()   .create("queue-id",  groupNames)	POST  /v1.0/{project_id}/queues/{queue_id}/groups
+	osclient.messageQueue().consumerGroups()   .list("queue-id")	GET  /v1.0/{project_id}/queues/{queue_id}/groups
+	osclient.messageQueue().consumerGroups()   .delete("queue-id",  "consumer-group-id")	DELETE  /v1.0/{project_id}/queues/{queue_id}/groups/{consumer_group_id}
+Queue Message	osclient.messageQueue().messages()   .produce("queue-id",  message)	POST  /v1.0/{project_id}/queues/{queue_id}/messages
+	osclient.messageQueue().messages()   .consume("queue-id",  "consumer-group-id", maxMessages, timeWait)	GET  /v1.0/{project_id}/queues/{queue_id}/groups/{consumer_group_id}/messages
+	osclient.messageQueue().messages()   .confirmConsuming"queue-id", "consumer-group-id", consumeResult)	POST  /v1.0/{project_id}/queues/{queue_id}/groups/{consumer_group_id}/ack
+Quota	osclient.messageQueue().quotas().get()	GET  /v1.0/{project_id}/quotas/dms
+
+A.2 Python
+A.2.1 IAM
+Interface	Method	API
+Endpoints Operations	endpoints(self, **query)	GET /v3/endpoints
+Project Operations	projects(self, **query)	GET /v3/projects
+Service Operations	services(self, **query)	GET /v3/services
+
+A.2.2 IMS
+Interface	Method	API
+Image Operations	upload_image(self, container_format=None,  disk_format=None,	POST   /v2/images Create an image PUT   /v2/images/{image_id}/file Upload binary image data
+	delete_image(self, image,  ignore_missing=True)	DELETE   /v2/images/{image_id}   Delete an image
+	find_image(self, name_or_id, ignore_missing=True)	GET   /v2/images Show images
+	get_image(self, image)	GET   /v2/images/{image_id}   Show image details
+	images(self, **query)	GET   /v2/images Show images
+	add_tag(self, image, tag)	PUT   /v2/images/{image_id}/tags/{tag}   Add image tag
+	remove_tag(self, image, tag)	DELETE   /v2/images/{image_id}/tags/{tag}   Delete image tag
+Member Operations	add_member(self, image, **attrs)	POST   /v2/images/{image_id}/members Create image member
+	remove_member(self, member, image,  ignore_missing=True)	DELETE   /v2/images/{image_id}/members/{member_id}   Delete image member
+	find_member(self, name_or_id, image,  ignore_missing=True)	GET   /v2/images/{image_id}/members List image members
+	get_member(self, member, image)	GET   /v2/images/{image_id}/members/{member_id}   Show image member details
+	members(self, image)	GET   /v2/images/{image_id}/members List image members
+	update_member(self, member, image,  **attrs)	PUT   /v2/images/{image_id}/members/{member_id}   Update image member
+
+A.2.3 VPC
+Interface	Method	API
+Floating IP Operations	create_ip(self, **attrs)	POST   /v2.0/floatingips Create floating IP
+	delete_ip(self, floating_ip, ignore_missing=True)	DELETE   /v2.0/floatingips/{floatingip_id}   Delete floating IP
+	find_available_ip(self)	GET   /v2.0/floatingips
+	find_ip(self, name_or_id, ignore_missing=True)	GET   /v2.0/floatingips List floating Ips
+	get_ip(self, floating_ip)	GET   /v2.0/floatingips/{floatingip_id}   Show floating IP details
+	ips(self, **query)	GET   /v2.0/floatingips
+	update_ip(self, floating_ip, **attrs)	PUT   /v2.0/floatingips/{floatingip_id}   Update floating IP
+Network Operations	create_network(self, **attrs)	POST   /v2.0/networks Create network
+	delete_network(self, network, ignore_missing=True)	DELETE   /v2.0/networks/{network_id}   Delete network
+	find_network(self, name_or_id, ignore_missing=True)	GET   /v2.0/networks List networks
+	get_network(self, network)	GET   /v2.0/networks/{network_id}   Show network details
+	networks(self, **query)	GET   /v2.0/networks List networks
+	update_network(self, network, **attrs)	PUT   /v2.0/networks/{network_id}   Update network
+Port Operations	create_port(self, **attrs)	POST   /v2.0/ports Create port
+	delete_port(self, port, ignore_missing=True)	DELETE   /v2.0/ports/{port_id}   Delete port
+	find_port(self, name_or_id, ignore_missing=True)	GET   /v2.0/ports List ports
+	get_port(self, port)	GET   /v2.0/ports/{port_id}   Show port details
+	ports(self, **query)	GET   /v2.0/ports List ports
+	update_port(self, port, **attrs)	PUT   /v2.0/ports/{port_id}   Update port
+Router OperationsRouter Operations	create_router(self, **attrs)	POST /v2.0/router
+	delete_router(self, router, ignore_missing=True)	DELETE   /v2.0/routers/{router_id}
+	find_router(self, name_or_id, ignore_missing=True)	GET /v2.0/routers
+	get_router(self, router)	GET   /v2.0/routers/{router_id}
+	routers(self, **query)	GET /v2.0/routers
+	update_router(self, router, **attrs)	PUT   /v2.0/routers/{router_id}   Update router
+	add_interface_to_router(self, router, subnet_id=None,  port_id=None)	PUT   /v2.0/routers/{router_id}/add_router_interface
+	remove_interface_from_router(self, router,  subnet_id=None,	PUT   /v2.0/routers/{router_id}/remove_router_interface
+Security Group Operations	create_security_group(self, **attrs)	POST   /v2.0/security-groups Create security group
+	delete_security_group(self, security_group,  ignore_missing=True)	DELETE   /v2.0/security-groups/{security_group_id}   Delete security group
+	find_security_group(self, name_or_id,  ignore_missing=True)	GET   /v2.0/security-groups List security groups
+	get_security_group(self, security_group)	GET   /v2.0/security-groups/{security_group_id}   Show security group
+	security_groups(self, **query)	GET   /v2.0/security-groups List security groups
+	update_security_group(self, security_group, **attrs)	PUT   /v2.0/security-groups/{security_group_id}   Update security group
+	security_group_open_port(self, sgid, port,  protocol='tcp')	POST   /v2.0/security-group-rules Create security group rule
+	security_group_allow_ping(self, sgid)	POST   /v2.0/security-group-rules Create security group rule
+	create_security_group_rule(self, **attrs)	POST   /v2.0/security-group-rules Create security group rule
+	delete_security_group_rule(self, security_group_rule,	DELETE   /v2.0/security-group-rules/{security_group_rule_id}   Delete security group rule
+	find_security_group_rule(self, name_or_id,  ignore_missing=True)	GET   /v2.0/security-group-rules List security group rules
+	get_security_group_rule(self, security_group_rule)	GET   /v2.0/security-group-rules/{security_group_rule_id}   Show security group rule
+	security_group_rules(self, **query)	GET   /v2.0/security-group-rules List security group rules
+Subnet Operations	create_subnet(self, **attrs)	POST   /v2.0/subnets Create subnet
+	delete_subnet(self, subnet, ignore_missing=True)	DELETE   /v2.0/subnets/{subnet_id}   Delete subnet
+	find_subnet(self, name_or_id, ignore_missing=True)	GET   /v2.0/subnets List subnets
+	get_subnet(self, subnet)	GET   /v2.0/subnets/{subnet_id}   Show subnet details
+	subnets(self, **query)	GET   /v2.0/subnets List subnets
+	get_subnet_ports(self, subnet_id)	get /v2.0/ports
+	update_subnet(self, subnet, **attrs)	PUT   /v2.0/subnets/{subnet_id}   Update subnet
+	update_vpn_service(self, vpn_service, **attrs)	PUT   /v2.0/vpn/vpnservices/{service_id}   Update VPN service
+
+A.2.4 ECS
+Interface	Method	API
+Flavor Operations	find_flavor(self,  name_or_id, ignore_missing=True)	GET   /flavors List Flavors
+	get_flavor(self, flavor)	GET   /flavors/{flavor_id}   Show Flavor Details
+	flavors(self, details=True, **query)	GET   /flavors/detail List Flavors
+Image Operations	delete_image(self, image, ignore_missing=True)	DELETE   /images/{image_id}   Delete Image
+	find_image(self, name_or_id, ignore_missing=True)	GET   /images List Images
+	get_image(self, image)	GET   /images/{image_id}   Show Image Details
+	images(self, details=True, **query)	GET   /images/detail
+	get_image_metadata(self, image)	GET   /images/{image_id}/metadata List Image Metadata
+Keypair Operations	create_keypair(self, **attrs)	POST   /os-keypairs
+	delete_keypair(self, keypair, ignore_missing=True)	DELETE   /os-keypairs/{keypair_name}
+	get_keypair(self, keypair)	GET   /os-keypairs/{keypair_name}
+	find_keypair(self, name_or_id,   ignore_missing=True)	GET   /os-keypairs
+	keypairs(self)	GET   /os-keypairs
+Server Operations	create_server(self, **attrs)	POST   /servers Create Server
+	delete_server(self, server, ignore_missing=True,  force=False)	DELETE   /servers/{server_id}   Delete Server
+	find_server(self, name_or_id, ignore_missing=True)	GET   /servers List Servers
+	get_server(self, server)	GET   /servers/{server_id}   Show Server Details
+	servers(self, details=True, **query)	GET   /servers List Servers
+	update_server(self, server, **attrs)	PUT   /servers/{server_id}   Update Server
+	reboot_server(self, server, reboot_type)	POST   /servers/{server_id}/action Reboot Server (reboot Action)
+	rebuild_server(self, server, name, admin_password,  **attrs)	POST   /servers/{server_id}/action Rebuild Server (rebuild Action)
+	resize_server(self, server, flavor)	POST   /servers/{server_id}/action Resize Server (resize Action)
+	confirm_server_resize(self, server)	POST   /servers/{server_id}/action Confirm Resized Server (confirmResize Action)
+	revert_server_resize(self, server)	POST   /servers/{server_id}/action Revert Resized Server (revertResize Action)
+	create_server_image(self, server, name,  metadata=None)	POST   /servers/{server_id}/action Create Image (createImage Action)
+	add_floating_ip_to_server(self, server, address,  fixed_address=None)	POST   /servers/{server_id}/action Add (Associate) Floating Ip (addFloatingIp Action)
+	remove_floating_ip_from_server(self, server,  address)	POST   /servers/{server_id}/action Remove (Disassociate) Floating Ip (removeFloatingIp Action)
+	lock_server(self, server)	POST
+/servers/{server_id}/action
+Lock Server (lock Action)
+	unlock_server(self, server)	POST
+/servers/{server_id}/action
+Unlock Server (unlock Action)
+	start_server(self, server)	POST   /servers/{server_id}/action Start Server (os-start Action)
+	stop_server(self, server)	POST   /servers/{server_id}/action Stop Server (os-stop Action)
+	get_server_metadata(self, server)	GET   /servers/{server_id}/metadata List All Metadata
+	set_server_metadata(self, server, **metadata)	POST   /servers/{server_id}/metadata Create or Update Metadata Items
+	delete_server_metadata(self, server, keys)	DELETE   /servers/{server_id}/metadata/{key}   Delete Metadata Item
+	wait_for_server(self, server, status='ACTIVE',  failures=['ERROR'],	GET   /servers/{server_id}   Show Server Details
+Server Interface Operations	create_server_interface(self, server, **attrs)	POST   /servers/{server_id}/os-interface Create Interface
+	delete_server_interface(self, server_interface,  server=None,	DELETE   /servers/{server_id}/os-interface/{port_id}   Detach Interface
+	get_server_interface(self, server_interface,  server=None)	GET   /servers/{server_id}/os-interface/{port_id}   Show Port Interface Details
+	server_interfaces(self, server)	GET   /servers/{server_id}/os-interface List Port Interfaces
+Server IPs	server_ips(self, server, network_label=None)	GET   /servers/{server_id}/ips List Ips
+Availability Zone Operations	availability_zones(self, details=False)	GET   /os-availability-zone Get Availability Zone Information
+Server Group Operations	create_server_group(self, **attrs)	POST   /os-server-groups Create Server Group
+	delete_server_group(self, server_group,  ignore_missing=True)	DELETE   /os-server-groups/{server_group_id}   Delete Server Group
+	find_server_group(self, name_or_id,  ignore_missing=True)	GET   /os-server-groups List Server Groups
+	get_server_group(self, server_group)	GET   /os-server-groups/{server_group_id}   Show Server Group Details
+
+A.2.5 EVS
+Interface	Method	API
+Snapshot Operations	get_snapshot(self,  snapshot)	GET   /v2/{tenant_id}/snapshots/{snapshot_id}
+	snapshots(self, details=True, **query)	GET   /v2/{tenant_id}/snapshots/detail
+	create_snapshot(self, **attrs)	POST  /v2/{tenant_id}/snapshots
+	delete_snapshot(self, snapshot, ignore_missing=True)	DELETE  /v2/{tenant_id}/snapshots/{snapshot_id}
+Type Operations	get_type(self, type)	GET   /v2/{tenant_id}/types/{volume_type_id}
+	types(self)	GET   /v2/{tenant_id}/types
+Volume Operations	get_volume(self,  volume)	GET   /v2/{tenant_id}/volumes/{volume_id}
+	volumes(self, details=True, **query)	GET  /v2/{tenant_id}/volumes/detail
+	create_volume(self, **attrs)	POST  /v2/{tenant_id}/volumes
+	delete_volume(self, volume, ignore_missing=True)	DELETE   /v2/{tenant_id}/volumes/{volume_id}
+
+A.2.6 AS
+Interface	Method	API
+Group	create_group(self, **attrs)	POST /autoscaling-api/v1/{tenant_id}/scaling_group
+	groups(self, **query)	GET /autoscaling-api/v1/{tenant_id}/scaling_group
+	get_group(self, group)	GET /autoscaling-api/v1/{tenant_id}/scaling_group/{scaling_group_id}
+	update_group(self, group, **attrs)	PUT /autoscaling-api/v1/{tenant_id}/scaling_group/{scaling_group_id}
+	delete_group(self, group, ignore_missing=True)	DELETE /autoscaling-api/v1/{tenant_id}/scaling_group/{scaling_group_id}
+	resume_group(self, group)	POST /autoscaling-api/v1/{tenant_id}/scaling_group/{scaling_group_id}/action
+	pause_group(self, group)	POST  /autoscaling-api/v1/{tenant_id}/scaling_group/{scaling_group_id}/action
+config	create_config(self, name, **attrs)	POST  /autoscaling-api/v1/{tenant_id}/scaling_configuration
+	configs(self, **query)	GET  /autoscaling-api/v1/{tenant_id}/scaling_configuration
+	get_config(self, config)	GET /autoscaling-api/v1/{tenant_id}/scaling_configuration/{scaling_configuration_id}
+	delete_config(self, config,  ignore_missing=True)	DELETE  /autoscaling-api/v1/{tenant_id}/scaling_configuration/{scaling_configuration_id}
+	batch_delete_configs(self, configs)	POST  /autoscaling-api/v1/{tenant_id}/scaling_configurations
+Instance	instances(self, group, **query)	GET  /autoscaling-api/v1/{tenant_id}/scaling_group_instance/{scaling_group_id}/list
+	remove_instance(self, instance,  delete_instance=False, ignore_missing=True)	DELETE  /autoscaling-api/v1/{tenant_id}/scaling_group_instance/{instance_id}
+	batch_add_instances(self, group,  instances)	POST  /autoscaling-api/v1/{tenant_id}/scaling_group_instance/{scaling_group_id}/action
+	batch_remove_instances(self, group,  instances, delete_instance=False)	POST  /autoscaling-api/v1/{tenant_id}/scaling_group_instance/{scaling_group_id}/action
+Policy	create_policy(self, **attrs)	POST /autoscaling-api/v1/{tenant_id}/scaling_policy
+	update_policy(self, policy, **attrs)	PUT  /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_policy_id}
+	policies(self, group, **query)	GET  /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_group_id}/list
+	get_policy(self, policy)	GET  /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_policy_id}
+	execute_policy(self, policy)	POST  /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_policy_id}/action
+	resume_policy(self, policy)	POST  /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_policy_id}/action
+	pause_policy(self, policy)	POST  /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_policy_id}/action
+	delete_policy(self, policy,  ignore_missing=True)	DELETE /autoscaling-api/v1/{tenant_id}/scaling_policy/{scaling_policy_id}
+Activity	activities(self, group, **query)	GET  /autoscaling-api/v1/{tenant_id}/scaling_activity_log/{scaling_group_id}
+Quota	quotas(self, group=None)	GET  /autoscaling-api/v1/{tenant_id}/quotas
+	quotas(self, group=None)	GET  /autoscaling-api/v1/{tenant_id}/quotas/{scaling_group_id}
+
+A.2.7 CES
+Interface	Method	API
+Metric	metrics(self, **query);	GET /V1.0/{project_id}/metrics
+Alarm	alarms(self, **query)	GET /V1.0/{project_id}/alarms
+	get_alarm(self, alarm)	GET /V1.0/{project_id}/alarms/{alarm_id}
+	enable_alarm(self, alarm)
+disable_alarm(self, alarm)	PUT  /V1.0/{project_id}/alarms/{alarm_id}/action
+	delete_alarm(self, alarm,  ignore_missing=True)	DELETE /V1.0/{project_id}/alarms/{alarm_id}
+Metric Data	metric_aggregations(self, **query)	GET /V1.0/{project_id}/metric-data
+	add_metric_data(self, data)	POST /V1.0/{project_id}/metric-data
+Quota	quotas(self)	GET /V1.0/{project_id}/quotas
+
+A.2.8 DNS
+Interface	Method	API
+Zone	create_zone(self, **attrs)	POST /v2/zones
+	get_zone(self, zone)	GET /v2/zones/{zone_id}
+	zones(self, **query)	GET /v2/zones
+	delete_zone(self, zone, ignore_missing=True)	DELETE /v2/zones/{zone_id}
+	nameservers(self, zone)	GET /v2/zones/{zone_id}/nameservers
+	add_router_to_zone(self, zone, **router)	POST /v2/zones/{zone_id}/associaterouter
+	remove_router_from_zone(self, zone, **router)	POST /v2/zones/{zone_id}/disassociaterouter
+Recordset	create_recordset(self, zone, **attrs)	POST /v2/zones/{zone_id}/recordsets
+	get_recordset(self, zone, recordset	GET /v2/zone/{zone_id}/recordsets/{recordset_id}
+	all_recordsets(self, **query)	GET /v2/recordsets
+	recordsets(self, zone, **query)	GET /v2/zones/{zone_id}/recordsets
+	delete_recordset(self, zone, recordset, ignore_missing=True)	DELETE  /v2/zones/{zone_id}/recordsets/{recordset_id}
+PTR Record	create_ptr(self, **attrs)	PATCH  /v2/reverse/floatingips/{region}:{floatingip_id}
+	restore_ptr(self, region, floating_ip_id)	PATCH  /v2/reverse/floatingips/{region}:{floatingip_id}
+	ptrs(self, **query)	GET /v2/reverse/floatingips
+	get_ptr(self, region, floating_ip_id)	GET /v2/reverse/floatingips/{region}:{floatingip_id}
+
+A.2.9 ELB
+Interface	Method	API
+LoadBalancer	create_load_balancer(self, **attrs)	POST /v1.0/{tenant_id}/elbaas/loadbalancers
+	get_load_balancer(self, load_balancer)	GET /v1.0/{tenant_id}/elbaas/loadbalancers/{loadbalancer_id}
+	load_balancers(self, **query)	GET /v1.0/{tenant_id}/elbaas/loadbalancers
+	update_load_balancer(self, load_balancer, **attrs)	PUT /v1.0/{tenant_id}/elbaas/loadbalancers/{loadbalancer_id}
+	delete_load_balancer(self, load_balancer, ignore_missing=True)	DELETE /v1.0/{tenant_id}/elbaas/loadbalancers/{loadbalancer_id}
+Listener	create_listener(self, **attrs)	POST /v1.0/{tenant_id}/elbaas/listeners
+	get_listener(self, listener)	GET /v1.0/{tenant_id}/elbaas/listeners/{listener_id}
+	listeners(self, **query)	GET /v1.0/{tenant_id}/elbaas/listeners?loadbalancer_id={loadbalancer_id}
+	update_listener(self, listener, **attrs)	PUT /v1.0/{tenant_id}/elbaas/listeners/{listener_id}
+	delete_listener(self, listener, ignore_missing=True)	DELETE /v1.0/{tenant_id}/elbaas/listeners/{listener_id}
+HealthCheck	create_health_check(self, **attrs)	POST /v1.0/{tenant_id}/elbaas/healthcheck
+	get_health_check(self, health_check)	GET /v1.0/{tenant_id}/elbaas/healthcheck/{healthcheck_id}
+	update_health_check(self, health_check, **attrs)	PUT /v1.0/{tenant_id}/elbaas/healthcheck/{healthcheck_id}
+	delete_health_check(self, health_check, ignore_missing=True)	DELETE /v1.0/{tenant_id}/elbaas/healthcheck/{healthcheck_id}
+Member	add_members_to_listener(self, listener, members)	POST /v1.0/{tenant_id}/elbaas/listeners/{listener_id}/members
+	remove_members_of_listener(self, listener, members)	POST /v1.0/{tenant_id}/elbaas/listeners/{listener_id}/members/action
+	listener_members(self, listener, **query)	GET /v1.0/{tenant_id}/elbaas/listeners/{listener_id}/members
+Certificate	create_certificate(self, **attrs)	POST /v1.0/{tenant_id}/elbaas/certificate
+	certificates(self)	GET /v1.0/{tenant_id}/elbaas/certificate
+	update_certificate(self, certificate, **attrs)	PUT /v1.0/{tenant_id}/elbaas/certificate/{certificate_id}
+	delete_certificate(self, certificate, ignore_missing=True)	DELETE /v1.0/{tenant_id}/elbaas/certificate/{certificate_id}
+
+A.2.10 VBS
+Interface	Method	API
+VolumeBackup	create_backup(**backup)	POST /v2/{tenant_id}/cloudbackups
+	create_native_backup(**backup)	Post /v2/{project_id}/backups
+	restore_backup(volume_backup_id,  volume_id)	POST/v2/{tenant_id}/cloudbackups/{backup_id}/restore
+	backups(**query))	GET /v2/{tenant_id}/backups
+	backups(details=True, **query)	GET /v2/{tenant_id}/backups/detail
+	get_backup(volume_backup_id)	GET /v2/{tenant_id}/backups/{backup_id}
+	delete_backup("volume_backup_id")	DELETE /v2/{tenant_id}/backups/{backup_id}
+	get_job("job_id")	GET /v1/{tenant_id}/jobs/{job_id}
+VolumeBackupPolicy	create_backup_policy(volume_backup_name,  **data)	POST /v2/{tenant_id}/backuppolicy
+	backup_policies()	GET /v2/{tenant_id}/backuppolicy
+	update_backup_policy(policy,  **updated)	PUT /v2/{tenant_id}/backuppolicy/{policy_id}
+	delete_backup_policy(policy)	DELETE /v2/{tenant_id}/backuppolicy/{policy_id}
+	link_resources_to_policy(policy,  volumes)	POST /v2/{tenant_id}/backuppolicyresources
+	unlink_resources_of_policy(policy,  volumes)	POST /v2/{tenant_id}/backuppolicyresources/{policy_id}/deleted_resources
+	execute_policy(policy)	POST /v2/{tenant_id}/backuppolicy/{policy_id}/action
+	tasks(backup_policy_id,  **query)	GET /v2/{tenant_id}/backuppolicy/{policy_id}/backuptasks
+	enable_policy(policy)	PUT /v2/{tenant_id}/backuppolicy/{policy_id}
+	disable_policy(policy)	PUT /v2/{tenant_id}/backuppolicy/{policy_id}
+
+A.2.11 SMN
+Interface	method	API URL
+Topic	create_topic(**kwargs)	POST /v2/{project_id}/notifications/topics
+	update_topic(topic, **kwargs)	PUT /v2/{project_id}/notifications/topics/{topic_urn}
+	delete_topic(topic, ignore_missing=True)	DELETE /v2/{project_id}/notifications/topics/{topic_urn}
+	topics(**query)	GET /v2/{project_id}/notifications/topics?offset=0&limit=2
+	get_topic(topic)	GET /v2/{project_id}/notifications/topics/{topic_urn}
+	get_topic_attr(topic, attrname=None)	GET /v2/{project_id}/notifications/topics/{topic_urn}/attributes?name=access_policy
+	update_topic_attr(topic_attr, attrname, value)	PUT /v2/{project_id}/notifications/topics/{topic_urn}/attributes/{attributes_name}
+	delete_topic_attr(topic_attr, attrname)	DELETE /v2/{project_id}/notifications/topics/{topic_urn}/attributes/{attributes_name}
+	delete_topic_attrs(topic)	DELETE /v2/{project_id}/notifications/topics/{topic_urn}/attributes
+Subscribe	subscriptions(**query)	GET /v2/{project_id}/notifications/subscriptions?offset=0&limit=2
+	topic_subscriptions(topic, **query)	GET /v2/{project_id}/notifications/topics/{topic_urn}/subscriptions?offset=0&limit=10
+	subscript_topic(topic, **kwargs)	POST /v2/{project_id}/notifications/topics/{topic_urn}/subscriptions
+	unsubscript_topic(sub, )	DELETE /v2/{project_id}/notifications/subscriptions/{subscription_urn}
+Message template	create_message_template(**kwargs)	POST /v2/{project_id}/notifications/message_template
+	update_message_template(getm, **kwargs)	PUT /v2/{project_id}/notifications/message_template/{message_template_Id}
+	delete_message_template(mt,ignore_missing=True )	DELETE /v2/{project_id}/notifications/message_template/{message_template_id}
+	message_templates(**query)	GET /v2/{project_id}/notifications/message_template
+	get_message_template(mt)	GET /v2/{project_id}/notifications/message_template/{message_template_id}
+Publish message	publish_topic(topic, **message_dict)	POST /v2/{project_id}/notifications/topics/{topic_urn}/publish
+	direct_publish(**msg_dict)	POST /v2/{project_id}/notifications/sms
+
+A.2.12 KMS
+Interface	Method	API
+Key Operations	create_key(**kwargs)	POST /v1.0/{project_id}/kms/create-key
+	keys(**query)	POST /v1.0/{project_id}/kms/list-keys
+	describe_key(key,  **kwargs)	POST /v1.0/{project_id}/kms/describe-key
+	disable_key(key, **params)	POST /v1.0/{project_id}/kms/disable-key
+	enable_key(key, **params)	POST /v1.0/{project_id}/kms/enable-key
+	schedule_deletion_key(key,  pending_days, **params)	POST /v1.0/{project_id}/kms/schedule-key-deletion
+	cancel_deletion_key(key,  **params)	POST /v1.0/{project_id}/kms/cancel-key-deletion
+andom Operations	gen_random(**params)	POST /v1.0/{project_id}/kms/gen-random
+DataKey Operations	create_datakey(key,  **params)	POST /v1.0/{project_id}/kms/create-datakey
+	create_datakey_wo_plain(key,  **params)	POST /v1.0/{project_id}/kms/create-datakey-without-plaintext
+	encrypt_datakey(datakey,  **params)	POST /v1.0/{project_id}/kms/encrypt-datakey
+	decrypt_datakey(datakey,  **params)	POST /v1.0/{project_id}/kms/decrypt-datakey
+InstanceNumber Operations	get_instance_number()	GET /v1.0/{project_id}/kms/user-instances
+Quota Operations	get_quota()	GET /v1.0/{project_id}/kms/user-quotas
+
+A.2.13 AntiDDoS
+Interface	Method	API
+	query_config_list()	GET /v1/  {project_id}/antiddos/query_config_list
+EIP	create_floating_ip(floating_ip_id,  **kwargs)	POST  /v1/{project_id}/antiddos/{floating_ip_id}
+	delete_floating_ip(floating_ip,  ignore_missing=True)	DELETE  /v1/{project_id}/antiddos/{floating_ip_id}
+	get_floating_ip(floating_ip)	GET  /v1/{project_id}/antiddos/{floating_ip_id}
+	update_floating_ip(floating_ip,  **attrs)	PUT  /v1/{project_id}/antiddos/{floating_ip_id}
+	query_task_status(task_id)	GET  /v1/{project_id}/query_task_status
+	floating_ips(**query)	GET /v1/{project_id}/antiddos
+	get_eip_status(floating_ip_id)	GET  /v1/{project_id}/antiddos/{floating_ip_id}/status
+	list_eip_daily(floating_ip_id,  **query)	GET  /v1/{project_id}/antiddos/{floating_ip_id}/daily
+	list_eip_log(floating_ip_id,  **query)	GET  /v1/{project_id}/antiddos/{floating_ip_id}/logs
+	get_eip_weekly(period_start_date)	GET /v1/{project_id}/antiddos/  weekly
+	get_alert_config()	GET /v2/{project_id}/  warnalert/alertconfig/query
+
+A.2.14 DMS
+Interface	method	API
+Queue Operations	create_queue(**kwargs)	POST  /v1.0/{project_id}/queues
+	queues()	GET  /v1.0/{project_id}/queues
+	get_queue(queue)	GET  /v1.0/{project_id}/queues/{queue_id}
+	delete_queue(queue, ignore_missing=True)	DELETE  /v1.0/{project_id}/queues/{queue_id}
+Group Operations	create_groups(queue,  **kwargs)	POST  /v1.0/{project_id}/queues/{queue_id}/groups
+	groups(queue)	GET  /v1.0/{project_id}/queues/{queue_id}/groups
+	delete_group(queue, group)	DELETE  /v1.0/{project_id}/queues/{queue_id}/groups/{consumer_group_id}
+Message Operations	send_messages(queue,  **kwargs)	POST  /v1.0/{project_id}/queues/{queue_id}/messages
+	consume_message(queue, consume_group,  **query)	GET  /v1.0/{project_id}/queues/{queue_id}/groups/{consumer_group_id}/messages
+	ack_consumed_message(consumed_message,  status='success')	POST  /v1.0/{project_id}/queues/{queue_id}/groups/{consumer_group_id}/ack
+ 
+B OpenStack 客户端命令行
+命令行细节，请在 "OpenStack Client CLI Command"查询。
+ 
+C 修订记录
+版本日期	变更说明
+2017-12-29	第一次正式发布。
+
